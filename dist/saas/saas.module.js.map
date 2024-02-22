@@ -1,0 +1,1 @@
+{"version":3,"file":"saas.module.js","sourceRoot":"","sources":["../../src/saas/saas.module.ts"],"names":[],"mappings":";;;;;;;;;AAAA,2CAAwC;AACxC,uDAAmD;AACnD,yDAAoD;AACpD,qCAAyC;AAMlC,IAAM,UAAU,GAAhB,MAAM,UAAU;CAAG,CAAA;AAAb,gCAAU;qBAAV,UAAU;IAJtB,IAAA,eAAM,EAAC;QACN,WAAW,EAAE,CAAC,gCAAc,CAAC;QAC7B,SAAS,EAAE,CAAC,iCAAc,EAAC,gBAAU,CAAC;KACvC,CAAC;GACW,UAAU,CAAG"}
