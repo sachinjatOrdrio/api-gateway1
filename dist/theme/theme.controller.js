@@ -63,7 +63,13 @@ let ThemeController = class ThemeController {
         try {
             const user = req.user;
             const response = await this.themeRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.GET_THEMES, { storeId, cursorId, previousCursorId, limit, user })
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.GET_THEMES, {
+                storeId,
+                cursorId,
+                previousCursorId,
+                limit,
+                user,
+            })
                 .toPromise();
             res
                 .status(response.status_code)
