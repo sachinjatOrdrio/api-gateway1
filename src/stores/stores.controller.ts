@@ -18,13 +18,15 @@ export class StoresController {
   create(@Body() createStoreDto: CreateStoreDto,@Req() req: any){
     try {
       console.log(req.user);
-      return this.storesRpcService.sendRequest(MessagePatternEnum.CREATE_STORE, createStoreDto);
+      return this.storesRpcService.sendRequest(MessagePatternEnum.CREATE_STORE, {createStoreDto,user:req.user});
     } catch (error) { 
       console.log(error);
     }
   }
 
   @Get()
+  @ApiBearerAuth() 
+  @UseGuards(AuthGuard)
   findAll() {
     try {
       return this.storesRpcService.sendRequest(MessagePatternEnum.GET_STORES, {});
@@ -35,6 +37,8 @@ export class StoresController {
   }
 
   @Get(':id')
+  @ApiBearerAuth() 
+  @UseGuards(AuthGuard)
   findOne(@Param('id') id: string) {
     try {
       return this.storesRpcService.sendRequest(MessagePatternEnum.GET_STORE, id);
@@ -44,6 +48,8 @@ export class StoresController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth() 
+  @UseGuards(AuthGuard)
   update(@Param('id') id: string, @Body() updateStoreDto: UpdateStoreDto) {
     try {
       return this.storesRpcService.sendRequest(MessagePatternEnum.UPDATE_STORE, {id, ...updateStoreDto});
@@ -53,6 +59,8 @@ export class StoresController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth() 
+  @UseGuards(AuthGuard)
   remove(@Param('id') id: string) {
     try {
       return this.storesRpcService.sendRequest(MessagePatternEnum.DELETE_STORE, id);

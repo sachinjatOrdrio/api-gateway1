@@ -27,7 +27,7 @@ let StoresController = class StoresController {
     create(createStoreDto, req) {
         try {
             console.log(req.user);
-            return this.storesRpcService.sendRequest(message_patterns_enum_1.MessagePatternEnum.CREATE_STORE, createStoreDto);
+            return this.storesRpcService.sendRequest(message_patterns_enum_1.MessagePatternEnum.CREATE_STORE, { createStoreDto, user: req.user });
         }
         catch (error) {
             console.log(error);
@@ -79,12 +79,16 @@ __decorate([
 ], StoresController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], StoresController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -92,6 +96,8 @@ __decorate([
 ], StoresController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -100,6 +106,8 @@ __decorate([
 ], StoresController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
