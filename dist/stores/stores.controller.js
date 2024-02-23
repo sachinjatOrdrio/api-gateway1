@@ -24,13 +24,15 @@ let StoresController = class StoresController {
     constructor(storesRpcService) {
         this.storesRpcService = storesRpcService;
     }
-    create(createStoreDto, req) {
+    async create(createStoreDto, req, res) {
         try {
-            console.log(req.user);
-            return this.storesRpcService.sendRequest(message_patterns_enum_1.MessagePatternEnum.CREATE_STORE, { createStoreDto, user: req.user });
+            const response = await this.storesRpcService.sendRequest(message_patterns_enum_1.MessagePatternEnum.CREATE_STORE, { createStoreDto, user: req.user }).toPromise();
+            res.status(response.status_code).json({ ...response, status_code: undefined });
+            return;
         }
         catch (error) {
-            console.log(error);
+            res.status(500).json({ message: error.message });
+            return;
         }
     }
     findAll() {
@@ -73,9 +75,10 @@ __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Req)()),
+    __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_store_dto_1.CreateStoreDto, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [create_store_dto_1.CreateStoreDto, Object, Object]),
+    __metadata("design:returntype", Promise)
 ], StoresController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),

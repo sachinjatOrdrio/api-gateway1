@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, Res } from '@nestjs/common';
 import { CreateStoreDto } from './dto/create-store.dto';
 import { UpdateStoreDto } from './dto/update-store.dto';
 import { StoresRpcService } from './stores.rpc.service';
 import { MessagePatternEnum } from './enums/message-patterns.enum';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/common/guards/auth.guard';
+import { Response } from 'express';
 
 @ApiTags('stores')
 @Controller('stores')
@@ -15,12 +16,15 @@ export class StoresController {
   @Post()
   @ApiBearerAuth() 
   @UseGuards(AuthGuard)
-  create(@Body() createStoreDto: CreateStoreDto,@Req() req: any){
+  async create(@Body() createStoreDto: CreateStoreDto,@Req() req: any,@Res() res: Response,
+  ){
     try {
-      console.log(req.user);
-      return this.storesRpcService.sendRequest(MessagePatternEnum.CREATE_STORE, {createStoreDto,user:req.user});
+      const response:any = await this.storesRpcService.sendRequest(MessagePatternEnum.CREATE_STORE, { createStoreDto, user: req.user }).toPromise();
+      res.status(response.status_code).json({ ...response, status_code: undefined });
+      return
     } catch (error) { 
-      console.log(error);
+      res.status(500).json({ message: error.message });
+      return
     }
   }
 
