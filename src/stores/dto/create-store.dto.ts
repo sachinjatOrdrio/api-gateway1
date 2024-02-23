@@ -1,32 +1,30 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateStoreDto {
+  @ApiProperty()
+  name: string;
 
-    @ApiProperty()
-    name: string;
+  @ApiProperty()
+  logo: string;
 
-    @ApiProperty()
-    logo: string;
+  @ApiProperty()
+  businessName: string;
 
-    @ApiProperty()
-    businessName: string;
+  @ApiProperty()
+  businessType: string;
 
-    @ApiProperty()
-    businessType: string;
+  @ApiProperty()
+  email: string;
 
-    @ApiProperty()
-    email: string;
+  @ApiProperty()
+  phone: string;
 
-    @ApiProperty()
-    phone: string;
+  @ApiProperty()
+  currency: string;
 
-    @ApiProperty()
-    currency: string;
+  @ApiProperty()
+  timezone: string;
 
-    @ApiProperty()
-    timezone: string;
-
-    @ApiProperty()
-    payment: any;
-  
+  @ApiProperty()
+  payment: any;
 }

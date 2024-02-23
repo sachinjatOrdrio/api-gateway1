@@ -19,7 +19,9 @@ let UserController = class UserController {
     }
     ping() {
         try {
-            return this.userRpcService.sendRequest(message_patterns_enum_1.MessagePatternEnum.PING, { test: 'USER-test' });
+            return this.userRpcService.sendRequest(message_patterns_enum_1.MessagePatternEnum.PING, {
+                test: 'USER-test',
+            });
         }
         catch (error) {
             console.log(error);

@@ -30,8 +30,12 @@ let AuthController = class AuthController {
     }
     async signUp(createAuthDto, res) {
         try {
-            const response = await this.rabbitRPC.sendRequest(message_patterns_enum_1.MessagePatternEnum.REGISTER, createAuthDto).toPromise();
-            res.status(response.status_code).json({ ...response, status_code: undefined });
+            const response = await this.rabbitRPC
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.REGISTER, createAuthDto)
+                .toPromise();
+            res
+                .status(response.status_code)
+                .json({ ...response, status_code: undefined });
             return;
         }
         catch (error) {
@@ -41,8 +45,12 @@ let AuthController = class AuthController {
     }
     async phoneLogin(phoneLoginAuthDto, res) {
         try {
-            const response = await this.rabbitRPC.sendRequest(message_patterns_enum_1.MessagePatternEnum.PHONE_LOGIN, phoneLoginAuthDto).toPromise();
-            res.status(response.status_code).json({ ...response, status_code: undefined });
+            const response = await this.rabbitRPC
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.PHONE_LOGIN, phoneLoginAuthDto)
+                .toPromise();
+            res
+                .status(response.status_code)
+                .json({ ...response, status_code: undefined });
             return;
         }
         catch (error) {
@@ -52,8 +60,12 @@ let AuthController = class AuthController {
     }
     async verifyOTP(verifyOtpDto, res) {
         try {
-            const response = await this.rabbitRPC.sendRequest(message_patterns_enum_1.MessagePatternEnum.VERIFY_OTP, verifyOtpDto).toPromise();
-            res.status(response.status_code).json({ ...response, status_code: undefined });
+            const response = await this.rabbitRPC
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.VERIFY_OTP, verifyOtpDto)
+                .toPromise();
+            res
+                .status(response.status_code)
+                .json({ ...response, status_code: undefined });
         }
         catch (error) {
             res.status(500).json({ message: error.message });
@@ -62,8 +74,12 @@ let AuthController = class AuthController {
     }
     async login(loginDto, res) {
         try {
-            const response = await this.rabbitRPC.sendRequest(message_patterns_enum_1.MessagePatternEnum.LOGIN, loginDto).toPromise();
-            res.status(response.status_code).json({ ...response, status_code: undefined });
+            const response = await this.rabbitRPC
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.LOGIN, loginDto)
+                .toPromise();
+            res
+                .status(response.status_code)
+                .json({ ...response, status_code: undefined });
             return;
         }
         catch (error) {
@@ -73,8 +89,12 @@ let AuthController = class AuthController {
     }
     async socialLogin(socialLoginDto, res) {
         try {
-            const response = await this.rabbitRPC.sendRequest(message_patterns_enum_1.MessagePatternEnum.SOCIAL_LOGIN, socialLoginDto).toPromise();
-            res.status(response.status_code).json({ ...response, status_code: undefined });
+            const response = await this.rabbitRPC
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.SOCIAL_LOGIN, socialLoginDto)
+                .toPromise();
+            res
+                .status(response.status_code)
+                .json({ ...response, status_code: undefined });
             return;
         }
         catch (error) {
@@ -84,9 +104,13 @@ let AuthController = class AuthController {
     }
     async phoneRegister(phoneRegisterDto, res) {
         try {
-            const response = await this.rabbitRPC.sendRequest(message_patterns_enum_1.MessagePatternEnum.PHONE_REGISTER, phoneRegisterDto).toPromise();
+            const response = await this.rabbitRPC
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.PHONE_REGISTER, phoneRegisterDto)
+                .toPromise();
             console.log(response);
-            res.status(response.status_code).json({ ...response, status_code: undefined });
+            res
+                .status(response.status_code)
+                .json({ ...response, status_code: undefined });
             return;
         }
         catch (error) {
@@ -96,8 +120,12 @@ let AuthController = class AuthController {
     }
     async socialRegister(socialAuthRegisterDto, res) {
         try {
-            const response = await this.rabbitRPC.sendRequest(message_patterns_enum_1.MessagePatternEnum.SOCIAL_REGISTER, socialAuthRegisterDto).toPromise();
-            res.status(response.status_code).json({ ...response, status_code: undefined });
+            const response = await this.rabbitRPC
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.SOCIAL_REGISTER, socialAuthRegisterDto)
+                .toPromise();
+            res
+                .status(response.status_code)
+                .json({ ...response, status_code: undefined });
             return;
         }
         catch (error) {

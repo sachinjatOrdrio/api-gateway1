@@ -16,7 +16,7 @@ export class ThemeRpcService {
       transport: Transport.RMQ,
       options: {
         urls: ['amqp://user:UnRISD1TUE2x85ZW@20.204.233.105:5672'],
-        queue: QueuesEnum.THEME,
+        queue: QueuesEnum.STORES,
       },
     });
   }

@@ -29,8 +29,12 @@ let AuthGuard = class AuthGuard {
             throw new common_1.UnauthorizedException('Missing authorization token');
         }
         try {
-            const decoded = this.jwtService.verify(token, { secret: this.configService.get("JWT_SECRET_KEY") });
-            const user = await this.rabbitRPC.sendRequest(message_patterns_enum_1.MessagePatternEnum.FIND_USER_BY_ID, decoded.userId).toPromise();
+            const decoded = this.jwtService.verify(token, {
+                secret: this.configService.get('JWT_SECRET_KEY'),
+            });
+            const user = await this.rabbitRPC
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.FIND_USER_BY_ID, decoded.userId)
+                .toPromise();
             if (!user) {
                 throw new common_1.UnauthorizedException('Invalid token');
             }

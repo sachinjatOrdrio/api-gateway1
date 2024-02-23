@@ -19,7 +19,9 @@ let SaasController = class SaasController {
     }
     ping() {
         try {
-            return this.saasRpcService.sendRequest(message_patterns_enum_1.MessagePatternEnum.PING, { test: 'saas-test' });
+            return this.saasRpcService.sendRequest(message_patterns_enum_1.MessagePatternEnum.PING, {
+                test: 'saas-test',
+            });
         }
         catch (error) {
             console.log(error);

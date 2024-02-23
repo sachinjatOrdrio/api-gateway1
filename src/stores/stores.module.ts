@@ -6,6 +6,6 @@ import { AuthRpcService } from 'src/auth/auth.rpc.service';
 
 @Module({
   controllers: [StoresController],
-  providers: [StoresRpcService,JwtService,AuthRpcService],
+  providers: [StoresRpcService, JwtService, AuthRpcService],
 })
 export class StoresModule {}

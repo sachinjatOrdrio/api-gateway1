@@ -9,7 +9,7 @@ async function bootstrap() {
     const configService = new config_1.ConfigService();
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     const config = new swagger_1.DocumentBuilder()
-        .setTitle("Ordrio 2.0 Api gateways")
+        .setTitle('Ordrio 2.0 Api gateways')
         .setDescription('The Ordrio 2.0 API gateways')
         .setVersion('1.0')
         .addBearerAuth()

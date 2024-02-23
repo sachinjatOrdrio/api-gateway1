@@ -19,7 +19,9 @@ let CustomerController = class CustomerController {
     }
     ping() {
         try {
-            return this.customerService.sendRequest(message_patterns_enum_1.MessagePatternEnum.PING, { test: 'customer-test' });
+            return this.customerService.sendRequest(message_patterns_enum_1.MessagePatternEnum.PING, {
+                test: 'customer-test',
+            });
         }
         catch (error) {
             console.log(error);

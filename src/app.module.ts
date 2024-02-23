@@ -14,6 +14,7 @@ import { ThemeModule } from './theme/theme.module';
 import { UserModule } from './user/user.module';
 import { DispatcherModule } from './dispatcher/dispatcher.module';
 import { JwtModule } from '@nestjs/jwt';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
@@ -42,5 +43,5 @@ import { JwtModule } from '@nestjs/jwt';
       }),
     }),
   ],
-  })
+})
 export class AppModule {}

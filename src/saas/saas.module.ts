@@ -5,6 +5,6 @@ import { JwtService } from '@nestjs/jwt';
 
 @Module({
   controllers: [SaasController],
-  providers: [SaasRpcService,JwtService],
+  providers: [SaasRpcService, JwtService],
 })
 export class SaasModule {}

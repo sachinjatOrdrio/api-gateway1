@@ -19,7 +19,9 @@ let PaymentController = class PaymentController {
     }
     ping() {
         try {
-            return this.paymentRpcService.sendRequest(message_patterns_enum_1.MessagePatternEnum.PING, { test: 'payment-test' });
+            return this.paymentRpcService.sendRequest(message_patterns_enum_1.MessagePatternEnum.PING, {
+                test: 'payment-test',
+            });
         }
         catch (error) {
             console.log(error);

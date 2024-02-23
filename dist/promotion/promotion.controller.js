@@ -19,7 +19,9 @@ let PromotionController = class PromotionController {
     }
     ping() {
         try {
-            return this.promotionRpcService.sendRequest(message_patterns_enum_1.MessagePatternEnum.PING, { test: 'promotion-test' });
+            return this.promotionRpcService.sendRequest(message_patterns_enum_1.MessagePatternEnum.PING, {
+                test: 'promotion-test',
+            });
         }
         catch (error) {
             console.log(error);

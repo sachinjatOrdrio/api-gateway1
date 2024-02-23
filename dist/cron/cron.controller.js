@@ -19,7 +19,9 @@ let CronController = class CronController {
     }
     ping() {
         try {
-            return this.CronRpcService.sendRequest(message_patterns_enum_1.MessagePatternEnum.PING, { test: 'cron-test' });
+            return this.CronRpcService.sendRequest(message_patterns_enum_1.MessagePatternEnum.PING, {
+                test: 'cron-test',
+            });
         }
         catch (error) {
             console.log(error);

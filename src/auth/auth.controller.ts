@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Res,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Res } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { ApiParam, ApiTags } from '@nestjs/swagger';
@@ -26,70 +19,73 @@ import { Response } from 'express';
 @Controller('auth')
 @ApiTags('auth')
 export class AuthController {
-  constructor(private readonly rabbitRPC: AuthRpcService) { }
+  constructor(private readonly rabbitRPC: AuthRpcService) {}
   @Post('/register')
   async signUp(
     @Body() createAuthDto: CreateAuthDto,
     @Res() res: Response,
   ): Promise<any> {
     try {
-      const response = await this.rabbitRPC.sendRequest(
-        MessagePatternEnum.REGISTER,
-        createAuthDto
-      ).toPromise();
-      res.status(response.status_code).json({ ...response, status_code: undefined });
-      return
+      const response = await this.rabbitRPC
+        .sendRequest(MessagePatternEnum.REGISTER, createAuthDto)
+        .toPromise();
+      res
+        .status(response.status_code)
+        .json({ ...response, status_code: undefined });
+      return;
     } catch (error) {
       res.status(500).json({ message: error.message });
-      return
+      return;
     }
   }
 
   @Post('/phone-login')
-  async phoneLogin(@Body() phoneLoginAuthDto: PhoneLoginAuthDto,
+  async phoneLogin(
+    @Body() phoneLoginAuthDto: PhoneLoginAuthDto,
     @Res() res: Response,
   ) {
     try {
-      const response: any =await  this.rabbitRPC.sendRequest(
-        MessagePatternEnum.PHONE_LOGIN,
-        phoneLoginAuthDto,
-      ).toPromise();
-      res.status(response.status_code).json({ ...response, status_code: undefined });
-      return
-    }
-    catch (error) {
+      const response: any = await this.rabbitRPC
+        .sendRequest(MessagePatternEnum.PHONE_LOGIN, phoneLoginAuthDto)
+        .toPromise();
+      res
+        .status(response.status_code)
+        .json({ ...response, status_code: undefined });
+      return;
+    } catch (error) {
       res.status(500).json({ message: error.message });
-      return
+      return;
     }
-    
   }
 
   @Post('/verify-otp')
   async verifyOTP(@Body() verifyOtpDto: VerifyOtpDto, @Res() res: Response) {
     try {
-      const response = await this.rabbitRPC.sendRequest(
-        MessagePatternEnum.VERIFY_OTP,
-        verifyOtpDto,
-      ).toPromise();
-      res.status(response.status_code).json({ ...response, status_code: undefined });
-    }
-    catch (error) {
+      const response = await this.rabbitRPC
+        .sendRequest(MessagePatternEnum.VERIFY_OTP, verifyOtpDto)
+        .toPromise();
+      res
+        .status(response.status_code)
+        .json({ ...response, status_code: undefined });
+    } catch (error) {
       res.status(500).json({ message: error.message });
-      return
+      return;
     }
-    
   }
 
   @Post('/login')
-  async login(@Body() loginDto: LoginDto, @Res() res: Response){
+  async login(@Body() loginDto: LoginDto, @Res() res: Response) {
     try {
-      const response: any = await this.rabbitRPC.sendRequest(MessagePatternEnum.LOGIN, loginDto).toPromise();
-      res.status(response.status_code).json({ ...response, status_code: undefined });
-      return
-    }
-    catch (error) {
+      const response: any = await this.rabbitRPC
+        .sendRequest(MessagePatternEnum.LOGIN, loginDto)
+        .toPromise();
+      res
+        .status(response.status_code)
+        .json({ ...response, status_code: undefined });
+      return;
+    } catch (error) {
       res.status(500).json({ message: error.message });
-      return
+      return;
     }
   }
 
@@ -122,20 +118,22 @@ export class AuthController {
   // }
 
   @Post('social-login')
-  async socialLogin(@Body() socialLoginDto: SocialLoginDto, @Res() res: Response,) {
-    try { 
-      const response = await this.rabbitRPC.sendRequest(
-        MessagePatternEnum.SOCIAL_LOGIN,
-        socialLoginDto,
-      ).toPromise();
-      res.status(response.status_code).json({ ...response, status_code: undefined });
-      return
-    }
-    catch (error) {
+  async socialLogin(
+    @Body() socialLoginDto: SocialLoginDto,
+    @Res() res: Response,
+  ) {
+    try {
+      const response = await this.rabbitRPC
+        .sendRequest(MessagePatternEnum.SOCIAL_LOGIN, socialLoginDto)
+        .toPromise();
+      res
+        .status(response.status_code)
+        .json({ ...response, status_code: undefined });
+      return;
+    } catch (error) {
       res.status(500).json({ message: error.message });
-      return
+      return;
     }
-    
   }
 
   // @Get('verify:id')
@@ -145,37 +143,42 @@ export class AuthController {
   // }
 
   @Post('phone-register')
-  async phoneRegister(@Body() phoneRegisterDto: PhoneRegisterDto,@Res() res: Response) {
+  async phoneRegister(
+    @Body() phoneRegisterDto: PhoneRegisterDto,
+    @Res() res: Response,
+  ) {
     try {
-      const response:any= await this.rabbitRPC.sendRequest(
-        MessagePatternEnum.PHONE_REGISTER,
-        phoneRegisterDto,
-      ).toPromise();
+      const response: any = await this.rabbitRPC
+        .sendRequest(MessagePatternEnum.PHONE_REGISTER, phoneRegisterDto)
+        .toPromise();
       console.log(response);
-      res.status(response.status_code).json({ ...response, status_code: undefined });
-      return
-    }
-    catch (error) {
+      res
+        .status(response.status_code)
+        .json({ ...response, status_code: undefined });
+      return;
+    } catch (error) {
       res.status(500).json({ message: error.message });
-      return
+      return;
     }
   }
 
   @Post('social-register')
-  async socialRegister(@Body() socialAuthRegisterDto: SocialAuthRegisterDto, @Res() res: Response) {
+  async socialRegister(
+    @Body() socialAuthRegisterDto: SocialAuthRegisterDto,
+    @Res() res: Response,
+  ) {
     try {
-      const response: any =await this.rabbitRPC.sendRequest(
-        MessagePatternEnum.SOCIAL_REGISTER,
-        socialAuthRegisterDto,
-      ).toPromise();
+      const response: any = await this.rabbitRPC
+        .sendRequest(MessagePatternEnum.SOCIAL_REGISTER, socialAuthRegisterDto)
+        .toPromise();
 
-      res.status(response.status_code).json({ ...response, status_code: undefined });
-      return
-    }
-    catch (error) {
+      res
+        .status(response.status_code)
+        .json({ ...response, status_code: undefined });
+      return;
+    } catch (error) {
       res.status(500).json({ message: error.message });
-      return
+      return;
     }
   }
-  
 }

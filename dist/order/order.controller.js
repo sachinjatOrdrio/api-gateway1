@@ -19,7 +19,9 @@ let OrderController = class OrderController {
     }
     ping() {
         try {
-            return this.orderService.sendRequest(message_patterns_enum_1.MessagePatternEnum.PING, { test: 'order-test' });
+            return this.orderService.sendRequest(message_patterns_enum_1.MessagePatternEnum.PING, {
+                test: 'order-test',
+            });
         }
         catch (error) {
             console.log(error);

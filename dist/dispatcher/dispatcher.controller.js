@@ -19,7 +19,9 @@ let DispatcherController = class DispatcherController {
     }
     ping() {
         try {
-            return this.dispatcherRpcService.sendRequest(message_patterns_enum_1.MessagePatternEnum.PING, { test: "dispatcher-test" });
+            return this.dispatcherRpcService.sendRequest(message_patterns_enum_1.MessagePatternEnum.PING, {
+                test: 'dispatcher-test',
+            });
         }
         catch (error) {
             console.log(error);

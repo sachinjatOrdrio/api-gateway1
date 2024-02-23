@@ -10,13 +10,15 @@ exports.ThemeModule = void 0;
 const common_1 = require("@nestjs/common");
 const theme_controller_1 = require("./theme.controller");
 const theme_rpc_service_1 = require("./theme.rpc.service");
+const jwt_1 = require("@nestjs/jwt");
+const auth_rpc_service_1 = require("../auth/auth.rpc.service");
 let ThemeModule = class ThemeModule {
 };
 exports.ThemeModule = ThemeModule;
 exports.ThemeModule = ThemeModule = __decorate([
     (0, common_1.Module)({
         controllers: [theme_controller_1.ThemeController],
-        providers: [theme_rpc_service_1.ThemeRpcService],
+        providers: [theme_rpc_service_1.ThemeRpcService, jwt_1.JwtService, auth_rpc_service_1.AuthRpcService],
     })
 ], ThemeModule);
 //# sourceMappingURL=theme.module.js.map

@@ -19,7 +19,9 @@ let SharedController = class SharedController {
     }
     ping() {
         try {
-            return this.sharedRpcService.sendRequest(message_patterns_enum_1.MessagePatternEnum.PING, { test: 'shared-test' });
+            return this.sharedRpcService.sendRequest(message_patterns_enum_1.MessagePatternEnum.PING, {
+                test: 'shared-test',
+            });
         }
         catch (error) {
             console.log(error);

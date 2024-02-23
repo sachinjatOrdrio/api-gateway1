@@ -26,8 +26,15 @@ let StoresController = class StoresController {
     }
     async create(createStoreDto, req, res) {
         try {
-            const response = await this.storesRpcService.sendRequest(message_patterns_enum_1.MessagePatternEnum.CREATE_STORE, { createStoreDto, user: req.user }).toPromise();
-            res.status(response.status_code).json({ ...response, status_code: undefined });
+            const response = await this.storesRpcService
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.CREATE_STORE, {
+                createStoreDto,
+                user: req.user,
+            })
+                .toPromise();
+            res
+                .status(response.status_code)
+                .json({ ...response, status_code: undefined });
             return;
         }
         catch (error) {

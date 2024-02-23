@@ -20,7 +20,7 @@ let ThemeRpcService = class ThemeRpcService {
             transport: microservices_1.Transport.RMQ,
             options: {
                 urls: ['amqp://user:UnRISD1TUE2x85ZW@20.204.233.105:5672'],
-                queue: enums_1.QueuesEnum.THEME,
+                queue: enums_1.QueuesEnum.STORES,
             },
         });
     }
