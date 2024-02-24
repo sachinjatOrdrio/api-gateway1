@@ -27,4 +27,4 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], UpdateMemberDto.prototype, "type", void 0);
-//# sourceM
+//# sourceMappingURL=update-member.dto.js.map
