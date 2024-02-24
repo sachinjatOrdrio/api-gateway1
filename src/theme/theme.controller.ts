@@ -9,7 +9,7 @@ import {
   UseGuards,
   Req,
   Res,
-  Query
+  Query,
 } from '@nestjs/common';
 import { CreateThemeDto } from './dto/create-theme.dto';
 import { UpdateThemeDto } from './dto/update-theme.dto';
@@ -22,9 +22,7 @@ import { Response } from 'express';
 @ApiTags('designs')
 @Controller('designs')
 export class ThemeController {
-  constructor(private readonly themeRpcService: ThemeRpcService) { }
-
- 
+  constructor(private readonly themeRpcService: ThemeRpcService) {}
 
   @Post()
   @ApiBearerAuth()
@@ -71,8 +69,7 @@ export class ThemeController {
         .status(response.status_code)
         .json({ ...response, status_code: undefined });
       return;
-    }
-    catch (error) {
+    } catch (error) {
       res.status(500).json({ message: error.message });
       return;
     }
@@ -91,11 +88,18 @@ export class ThemeController {
     @Query('previousCursorId') previousCursorId: string,
     @Query('limit') limit: number,
     @Req() req: any,
-    @Res() res: Response) {
+    @Res() res: Response,
+  ) {
     try {
       const user = req.user;
       const response = await this.themeRpcService
-        .sendRequest(MessagePatternEnum.GET_THEMES, { storeId,cursorId,previousCursorId,limit, user })
+        .sendRequest(MessagePatternEnum.GET_THEMES, {
+          storeId,
+          cursorId,
+          previousCursorId,
+          limit,
+          user,
+        })
         .toPromise();
       res
         .status(response.status_code)
@@ -107,7 +111,6 @@ export class ThemeController {
     }
   }
 
-
   @Get(':id')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
@@ -115,7 +118,8 @@ export class ThemeController {
   async findOne(
     @Param('id') id: string,
     @Req() req: any,
-    @Res() res: Response) {
+    @Res() res: Response,
+  ) {
     try {
       console.log('get theme', id);
       const user = req.user;
@@ -132,4 +136,3 @@ export class ThemeController {
     }
   }
 }
-
