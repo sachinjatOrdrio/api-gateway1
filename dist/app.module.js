@@ -11,17 +11,6 @@ const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const auth_module_1 = require("./auth/auth.module");
 const stores_module_1 = require("./stores/stores.module");
-const cart_module_1 = require("./cart/cart.module");
-const cron_module_1 = require("./cron/cron.module");
-const customer_module_1 = require("./customer/customer.module");
-const order_module_1 = require("./order/order.module");
-const payment_module_1 = require("./payment/payment.module");
-const promotion_module_1 = require("./promotion/promotion.module");
-const saas_module_1 = require("./saas/saas.module");
-const shared_module_1 = require("./shared/shared.module");
-const theme_module_1 = require("./theme/theme.module");
-const user_module_1 = require("./user/user.module");
-const dispatcher_module_1 = require("./dispatcher/dispatcher.module");
 const jwt_1 = require("@nestjs/jwt");
 let AppModule = class AppModule {
 };
@@ -34,17 +23,6 @@ exports.AppModule = AppModule = __decorate([
             }),
             auth_module_1.AuthModule,
             stores_module_1.StoresModule,
-            cart_module_1.CartModule,
-            cron_module_1.CronModule,
-            customer_module_1.CustomerModule,
-            order_module_1.OrderModule,
-            payment_module_1.PaymentModule,
-            promotion_module_1.PromotionModule,
-            saas_module_1.SaasModule,
-            shared_module_1.SharedModule,
-            theme_module_1.ThemeModule,
-            user_module_1.UserModule,
-            dispatcher_module_1.DispatcherModule,
             jwt_1.JwtModule.registerAsync({
                 imports: [config_1.ConfigModule],
                 inject: [config_1.ConfigService],
