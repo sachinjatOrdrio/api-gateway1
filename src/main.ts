@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
+import { ValidationExceptionFilter } from 'src/validation.filter';
 
 async function bootstrap() {
   const configService = new ConfigService();
@@ -16,6 +17,7 @@ async function bootstrap() {
 
   app.enableCors({ allowedHeaders: '*', origin: '*', methods: '*' });
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalFilters(new ValidationExceptionFilter());
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
