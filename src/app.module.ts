@@ -31,7 +31,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     // PromotionModule,
     // SaasModule,
     // SharedModule,
-    // ThemeModule,
+     ThemeModule,
     // UserModule,
     // DispatcherModule,
     JwtModule.registerAsync({
