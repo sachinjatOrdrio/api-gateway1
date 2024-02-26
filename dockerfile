@@ -1,6 +1,6 @@
 
 # Start with the official Node.js Docker image
-FROM node:20
+FROM node:18-alpine
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -17,5 +17,7 @@ RUN npm install
 COPY . .
 
 # Expose the port the app runs in
-EXPOSE 3000
+EXPOSE 8000
+
+CMD [ "npm", "run", "start" ]
 
