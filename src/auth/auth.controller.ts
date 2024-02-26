@@ -29,11 +29,13 @@ export class AuthController {
       const response = await this.rabbitRPC
         .sendRequest(MessagePatternEnum.REGISTER, createAuthDto)
         .toPromise();
+      console.log(response);
       res
         .status(response.status_code)
         .json({ ...response, status_code: undefined });
       return;
     } catch (error) {
+      console.log('AuthController', error);
       res.status(500).json({ message: error.message });
       return;
     }

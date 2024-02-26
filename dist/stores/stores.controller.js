@@ -171,7 +171,10 @@ let StoresController = class StoresController {
         try {
             const user = req.user;
             const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.CREATE_MEMBER, { createMemberDto, user })
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.CREATE_MEMBER, {
+                createMemberDto,
+                user,
+            })
                 .toPromise();
             res
                 .status(response.status_code)
@@ -203,7 +206,11 @@ let StoresController = class StoresController {
         try {
             const user = req.user;
             const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.UPDATE_MEMBER, { id, updateMemberDto, user })
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.UPDATE_MEMBER, {
+                id,
+                updateMemberDto,
+                user,
+            })
                 .toPromise();
             res
                 .status(response.status_code)
@@ -235,7 +242,10 @@ let StoresController = class StoresController {
         try {
             const user = req.user;
             const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.CREATE_CUSTOMER, { createCustomerDto, user })
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.CREATE_CUSTOMER, {
+                createCustomerDto,
+                user,
+            })
                 .toPromise();
             res
                 .status(response.status_code)
@@ -267,7 +277,11 @@ let StoresController = class StoresController {
         try {
             const user = req.user;
             const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.UPDATE_CUSTOMER, { id, updateCustomerDto, user })
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.UPDATE_CUSTOMER, {
+                id,
+                updateCustomerDto,
+                user,
+            })
                 .toPromise();
             res
                 .status(response.status_code)
@@ -315,7 +329,10 @@ let StoresController = class StoresController {
         try {
             const user = req.user;
             const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.CREATE_BRANCH, { createBranchDto, user })
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.CREATE_BRANCH, {
+                createBranchDto,
+                user,
+            })
                 .toPromise();
             res
                 .status(response.status_code)
@@ -331,7 +348,11 @@ let StoresController = class StoresController {
         try {
             const user = req.user;
             const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.UPDATE_BRANCH, { id, updateBranchDto, user })
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.UPDATE_BRANCH, {
+                id,
+                updateBranchDto,
+                user,
+            })
                 .toPromise();
             res
                 .status(response.status_code)
@@ -379,7 +400,10 @@ let StoresController = class StoresController {
         try {
             const user = req.user;
             const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.CREATE_PRODUCT, { createProductDto, user })
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.CREATE_PRODUCT, {
+                createProductDto,
+                user,
+            })
                 .toPromise();
             res
                 .status(response.status_code)
@@ -395,7 +419,11 @@ let StoresController = class StoresController {
         try {
             const user = req.user;
             const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.UPDATE_PRODUCT, { id, updateProductDto, user })
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.UPDATE_PRODUCT, {
+                id,
+                updateProductDto,
+                user,
+            })
                 .toPromise();
             res
                 .status(response.status_code)
@@ -474,6 +502,14 @@ __decorate([
     (0, common_1.Post)(),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, swagger_1.ApiOperation)({ summary: 'Create a new store' }),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        description: 'The store has been successfully created.',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 400, description: 'Bad request.' }),
+    (0, swagger_1.ApiResponse)({ status: 401, description: 'Unauthorized.' }),
+    (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error.' }),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Req)()),
     __param(2, (0, common_1.Res)()),

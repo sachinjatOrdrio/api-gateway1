@@ -14,7 +14,13 @@ import { CreateStoreDto } from './dto/create-store.dto';
 import { UpdateStoreDto } from './dto/update-store.dto';
 import { StoresRpcService } from './stores.rpc.service';
 import { MessagePatternEnum } from './enums/message-patterns.enum';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { AuthGuard } from 'src/common/guards/auth.guard';
 import { Response } from 'express';
 import { CreateMemberDto } from './dto/create-member.dto';
@@ -27,8 +33,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 
 @Controller('stores')
 export class StoresController {
-  constructor(private readonly storesRpcService: StoresRpcService) { }
-
+  constructor(private readonly storesRpcService: StoresRpcService) {}
 
   @ApiTags('stores/products')
   @Get('products')
@@ -70,8 +75,6 @@ export class StoresController {
     }
   }
 
- 
-  
   @ApiTags('stores/members')
   @Get('members')
   @ApiBearerAuth()
@@ -83,8 +86,8 @@ export class StoresController {
       const response = await this.storesRpcService
         .sendRequest(MessagePatternEnum.GET_MEMBERS, { user })
         .toPromise();
-      
-      console.log('response:', response); 
+
+      console.log('response:', response);
       res
         .status(response.status_code)
         .json({ ...response, status_code: undefined });
@@ -119,19 +122,21 @@ export class StoresController {
   @Post()
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  // @ApiOperation({ summary: 'Create a new store' })
-  // @ApiBody({ 
-  //   type: CreateStoreDto,
-  //   example: {
-  //     name: 'My Store',
-  //     location: '123 Main St',
-  //     // ... other properties ...
-  //   }
+  @ApiOperation({ summary: 'Create a new store' })
+  // @ApiBody({
+  //   // type: CreateStoreDto,
+  //   description: 'The store to be created',
+  //   examples: {
+  //     name: 'Store 1',
+  //   },
   // })
-  // @ApiResponse({ status: 201, description: 'The store has been successfully created.', })
-  // @ApiResponse({ status: 400, description: 'Bad request.' })
-  // @ApiResponse({ status: 401, description: 'Unauthorized.' })
-  // @ApiResponse({ status: 500, description: 'Internal server error.' })
+  @ApiResponse({
+    status: 201,
+    description: 'The store has been successfully created.',
+  })
+  @ApiResponse({ status: 400, description: 'Bad request.' })
+  @ApiResponse({ status: 401, description: 'Unauthorized.' })
+  @ApiResponse({ status: 500, description: 'Internal server error.' })
   async create(
     @Body() createStoreDto: CreateStoreDto,
     @Req() req: any,
@@ -153,10 +158,6 @@ export class StoresController {
       return;
     }
   }
-
-
-
-
 
   @ApiTags('stores')
   @Get(':id')
@@ -244,7 +245,10 @@ export class StoresController {
     try {
       const user = req.user;
       const response = await this.storesRpcService
-        .sendRequest(MessagePatternEnum.CREATE_MEMBER, { createMemberDto, user })
+        .sendRequest(MessagePatternEnum.CREATE_MEMBER, {
+          createMemberDto,
+          user,
+        })
         .toPromise();
       res
         .status(response.status_code)
@@ -256,13 +260,15 @@ export class StoresController {
     }
   }
 
-
-
   @ApiTags('stores/members')
   @Get('members/:uid')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  async getMember(@Param('uid') uid: string, @Req() req: any, @Res() res: Response) {
+  async getMember(
+    @Param('uid') uid: string,
+    @Req() req: any,
+    @Res() res: Response,
+  ) {
     try {
       const user = req.user;
       const response = await this.storesRpcService
@@ -291,7 +297,11 @@ export class StoresController {
     try {
       const user = req.user;
       const response = await this.storesRpcService
-        .sendRequest(MessagePatternEnum.UPDATE_MEMBER, { id, updateMemberDto, user })
+        .sendRequest(MessagePatternEnum.UPDATE_MEMBER, {
+          id,
+          updateMemberDto,
+          user,
+        })
         .toPromise();
       res
         .status(response.status_code)
@@ -339,7 +349,10 @@ export class StoresController {
     try {
       const user = req.user;
       const response = await this.storesRpcService
-        .sendRequest(MessagePatternEnum.CREATE_CUSTOMER, { createCustomerDto, user })
+        .sendRequest(MessagePatternEnum.CREATE_CUSTOMER, {
+          createCustomerDto,
+          user,
+        })
         .toPromise();
       res
         .status(response.status_code)
@@ -351,13 +364,15 @@ export class StoresController {
     }
   }
 
-  
-
   @ApiTags('stores/customers')
   @Get('customers/:id')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  async getCustomer(@Param('id') id: string, @Req() req: any, @Res() res: Response) {
+  async getCustomer(
+    @Param('id') id: string,
+    @Req() req: any,
+    @Res() res: Response,
+  ) {
     try {
       const user = req.user;
       const response = await this.storesRpcService
@@ -386,7 +401,11 @@ export class StoresController {
     try {
       const user = req.user;
       const response = await this.storesRpcService
-        .sendRequest(MessagePatternEnum.UPDATE_CUSTOMER, { id, updateCustomerDto, user })
+        .sendRequest(MessagePatternEnum.UPDATE_CUSTOMER, {
+          id,
+          updateCustomerDto,
+          user,
+        })
         .toPromise();
       res
         .status(response.status_code)
@@ -442,7 +461,6 @@ export class StoresController {
     }
   }
 
-
   @ApiTags('stores/branches')
   @Post('branches')
   @ApiBearerAuth()
@@ -455,7 +473,10 @@ export class StoresController {
     try {
       const user = req.user;
       const response = await this.storesRpcService
-        .sendRequest(MessagePatternEnum.CREATE_BRANCH, { createBranchDto, user })
+        .sendRequest(MessagePatternEnum.CREATE_BRANCH, {
+          createBranchDto,
+          user,
+        })
         .toPromise();
       res
         .status(response.status_code)
@@ -466,8 +487,6 @@ export class StoresController {
       return;
     }
   }
-
-  
 
   @ApiTags('stores/branches')
   @Patch('branches/:id')
@@ -482,7 +501,11 @@ export class StoresController {
     try {
       const user = req.user;
       const response = await this.storesRpcService
-        .sendRequest(MessagePatternEnum.UPDATE_BRANCH, { id, updateBranchDto, user })
+        .sendRequest(MessagePatternEnum.UPDATE_BRANCH, {
+          id,
+          updateBranchDto,
+          user,
+        })
         .toPromise();
       res
         .status(response.status_code)
@@ -498,7 +521,11 @@ export class StoresController {
   @Delete('branches/:id')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  async removeBranch(@Param('id') id: string, @Req() req: any, @Res() res: Response) {
+  async removeBranch(
+    @Param('id') id: string,
+    @Req() req: any,
+    @Res() res: Response,
+  ) {
     try {
       const user = req.user;
       const response = await this.storesRpcService
@@ -518,7 +545,11 @@ export class StoresController {
   @Get('branches/:id')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  async getBranch(@Param('id') id: string, @Req() req: any, @Res() res: Response) {
+  async getBranch(
+    @Param('id') id: string,
+    @Req() req: any,
+    @Res() res: Response,
+  ) {
     try {
       const user = req.user;
       const response = await this.storesRpcService
@@ -546,7 +577,10 @@ export class StoresController {
     try {
       const user = req.user;
       const response = await this.storesRpcService
-        .sendRequest(MessagePatternEnum.CREATE_PRODUCT, { createProductDto, user })
+        .sendRequest(MessagePatternEnum.CREATE_PRODUCT, {
+          createProductDto,
+          user,
+        })
         .toPromise();
       res
         .status(response.status_code)
@@ -557,7 +591,6 @@ export class StoresController {
       return;
     }
   }
-
 
   @ApiTags('stores/products')
   @Patch('products/:id')
@@ -572,7 +605,11 @@ export class StoresController {
     try {
       const user = req.user;
       const response = await this.storesRpcService
-        .sendRequest(MessagePatternEnum.UPDATE_PRODUCT, { id, updateProductDto, user })
+        .sendRequest(MessagePatternEnum.UPDATE_PRODUCT, {
+          id,
+          updateProductDto,
+          user,
+        })
         .toPromise();
       res
         .status(response.status_code)
@@ -588,7 +625,11 @@ export class StoresController {
   @Delete('products/:id')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  async removeProduct(@Param('id') id: string, @Req() req: any, @Res() res: Response) {
+  async removeProduct(
+    @Param('id') id: string,
+    @Req() req: any,
+    @Res() res: Response,
+  ) {
     try {
       const user = req.user;
       const response = await this.storesRpcService
@@ -603,6 +644,4 @@ export class StoresController {
       return;
     }
   }
-
-
 }
