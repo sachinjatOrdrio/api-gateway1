@@ -10,8 +10,15 @@ export class ValidationExceptionFilter implements ExceptionFilter {
 
     if (exception) {
       delete exception.message
+      let message =""
+      if (exception.response.message instanceof Array) {
+        message = exception.response.message[0]
+      }
+      else {
+        message = exception.response.message
+      }
       const errorResponse = {
-        message: exception.response.message[0] ?? exception.response.message,
+        message: message,
       };
       response.status(HttpStatus.BAD_REQUEST).json(errorResponse);
     } else {
