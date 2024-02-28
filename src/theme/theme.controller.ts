@@ -22,7 +22,6 @@ import { Response } from 'express';
 @Controller('designs')
 export class ThemeController {
   constructor(private readonly themeRpcService: ThemeRpcService) {}
-
   @Post()
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
