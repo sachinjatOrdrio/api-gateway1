@@ -1,5 +1,10 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
-import { ValidationError } from 'class-validator';
+import {
+  ExceptionFilter,
+  Catch,
+  ArgumentsHost,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 
 @Catch(HttpException)
 export class ValidationExceptionFilter implements ExceptionFilter {
@@ -9,13 +14,12 @@ export class ValidationExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest();
 
     if (exception) {
-      delete exception.message
-      let message =""
+      delete exception.message;
+      let message = '';
       if (exception.response.message instanceof Array) {
-        message = exception.response.message[0]
-      }
-      else {
-        message = exception.response.message
+        message = exception.response.message[0];
+      } else {
+        message = exception.response.message;
       }
       const errorResponse = {
         message: message,

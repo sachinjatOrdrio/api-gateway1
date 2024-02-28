@@ -1,14 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
-import { CreateCustomerDto } from './dto/create-customer.dto';
-import { UpdateCustomerDto } from './dto/update-customer.dto';
+import { Controller, Get } from '@nestjs/common';
 import { CustomerRpcService } from './customer.rpc.service';
 import { MessagePatternEnum } from './enums/message-patterns.enum';
 

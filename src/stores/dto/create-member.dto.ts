@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateMemberDto {
-
   @ApiProperty()
   storeId: string;
 
@@ -10,5 +9,4 @@ export class CreateMemberDto {
 
   @ApiProperty()
   type: string;
- 
 }

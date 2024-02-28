@@ -1,20 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsOptional } from 'class-validator';
-
-
 
 export class CreateDeliveryChargeDto {
   @ApiProperty()
-   type: string;
+  type: string;
   @ApiProperty()
-   charge: number;
+  charge: number;
   @ApiProperty()
-   minAmount: number;
+  minAmount: number;
 }
 
 export class UpdateBranchDto {
   @ApiProperty()
-   storeId: string;
+  storeId: string;
   @ApiProperty()
   type: string;
   @ApiProperty()
@@ -28,7 +25,14 @@ export class UpdateBranchDto {
   @ApiProperty()
   phone: string;
   @ApiProperty()
-  payment: { type: string; account: string; ifsc: string; name: string; bank: string; branch: string; };
+  payment: {
+    type: string;
+    account: string;
+    ifsc: string;
+    name: string;
+    bank: string;
+    branch: string;
+  };
   @ApiProperty()
   createdBy: string;
   @ApiProperty()
