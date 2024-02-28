@@ -20,6 +20,8 @@ import { CategoriesModule } from './categories/categories.module';
 import { MemberController } from './member/member.controller';
 import { MemberRpcService } from './member/member.rpc.service';
 import { MemberModule } from './member/member.module';
+import { RoleModule } from './role/role.module';
+
 
 @Module({
   imports: [
@@ -52,8 +54,9 @@ import { MemberModule } from './member/member.module';
     StorageModule,
     CategoriesModule,
     MemberModule,
+    RoleModule
   ],
   // controllers: [MemberController],
   // providers: [MemberRpcService],
 })
-export class AppModule {}
+export class AppModule { }
