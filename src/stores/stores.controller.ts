@@ -24,8 +24,6 @@ import {
 } from '@nestjs/swagger';
 import { AuthGuard } from 'src/common/guards/auth.guard';
 import { Response } from 'express';
-import { CreateMemberDto } from './dto/create-member.dto';
-import { UpdateMemberDto } from './dto/update-member.dto';
 import { UpdateBranchDto } from './dto/update-branch.dto';
 import { CreateBranchDto } from './dto/create-branch.dto';
 import { CreateProductDto } from './dto/create-product.dto';
