@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { QueuesEnum } from 'src/common/enums';
 
 @Injectable()
-export class ThemeRpcService {
+export class MemberRpcService {
   private client: ClientProxy;
 
   constructor() {

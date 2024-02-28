@@ -20,89 +20,12 @@ const stores_rpc_service_1 = require("./stores.rpc.service");
 const message_patterns_enum_1 = require("./enums/message-patterns.enum");
 const swagger_1 = require("@nestjs/swagger");
 const auth_guard_1 = require("../common/guards/auth.guard");
-const create_member_dto_1 = require("./dto/create-member.dto");
-const update_member_dto_1 = require("./dto/update-member.dto");
-const create_customer_dto_1 = require("./dto/create-customer.dto");
 const update_branch_dto_1 = require("./dto/update-branch.dto");
 const create_branch_dto_1 = require("./dto/create-branch.dto");
 const create_product_dto_1 = require("./dto/create-product.dto");
 let StoresController = class StoresController {
     constructor(storesRpcService) {
         this.storesRpcService = storesRpcService;
-    }
-    async getProducts(req, res, storeId, cursorId, previousCursorId, searchKey, orderBy, limit) {
-        try {
-            const user = req.user;
-            const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.GET_PRODUCTS, {
-                user,
-                storeId,
-                limit: limit || 10,
-                cursorId,
-                previousCursorId,
-                orderBy,
-                searchKey,
-            })
-                .toPromise();
-            res
-                .status(response.status_code)
-                .json({ ...response, status_code: undefined });
-            return;
-        }
-        catch (error) {
-            res.status(500).json({ message: error.message });
-            return;
-        }
-    }
-    async getBranches(req, res) {
-        try {
-            const user = req.user;
-            const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.GET_BRANCHES, { user })
-                .toPromise();
-            res
-                .status(response.status_code)
-                .json({ ...response, status_code: undefined });
-            return;
-        }
-        catch (error) {
-            res.status(500).json({ message: error.message });
-            return;
-        }
-    }
-    async getMembers(req, res) {
-        try {
-            console.log('get Members');
-            const user = req.user;
-            const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.GET_MEMBERS, { user })
-                .toPromise();
-            console.log('response:', response);
-            res
-                .status(response.status_code)
-                .json({ ...response, status_code: undefined });
-            return;
-        }
-        catch (error) {
-            res.status(500).json({ message: error.message });
-            return;
-        }
-    }
-    async getCustomers(req, res) {
-        try {
-            const user = req.user;
-            const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.GET_CUSTOMERS, { user })
-                .toPromise();
-            res
-                .status(response.status_code)
-                .json({ ...response, status_code: undefined });
-            return;
-        }
-        catch (error) {
-            res.status(500).json({ message: error.message });
-            return;
-        }
     }
     async create(createStoreDto, req, res) {
         try {
@@ -128,7 +51,6 @@ let StoresController = class StoresController {
             const response = await this.storesRpcService
                 .sendRequest(message_patterns_enum_1.MessagePatternEnum.GET_STORE, { id, user })
                 .toPromise();
-            console.log('responssae:', response);
             res
                 .status(response.status_code)
                 .json({ ...response, status_code: undefined });
@@ -164,164 +86,6 @@ let StoresController = class StoresController {
             const user = req.user;
             const response = await this.storesRpcService
                 .sendRequest(message_patterns_enum_1.MessagePatternEnum.DELETE_STORE, { id, user })
-                .toPromise();
-            res
-                .status(response.status_code)
-                .json({ ...response, status_code: undefined });
-            return;
-        }
-        catch (error) {
-            res.status(500).json({ message: error.message });
-            return;
-        }
-    }
-    async addMember(createMemberDto, req, res) {
-        try {
-            const user = req.user;
-            const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.CREATE_MEMBER, {
-                createMemberDto,
-                user,
-            })
-                .toPromise();
-            res
-                .status(response.status_code)
-                .json({ ...response, status_code: undefined });
-            return;
-        }
-        catch (error) {
-            res.status(500).json({ message: error.message });
-            return;
-        }
-    }
-    async getMember(uid, req, res) {
-        try {
-            const user = req.user;
-            const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.GET_MEMBER, { uid, user })
-                .toPromise();
-            res
-                .status(response.status_code)
-                .json({ ...response, status_code: undefined });
-            return;
-        }
-        catch (error) {
-            res.status(500).json({ message: error.message });
-            return;
-        }
-    }
-    async updateMember(id, updateMemberDto, req, res) {
-        try {
-            const user = req.user;
-            const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.UPDATE_MEMBER, {
-                id,
-                updateMemberDto,
-                user,
-            })
-                .toPromise();
-            res
-                .status(response.status_code)
-                .json({ ...response, status_code: undefined });
-            return;
-        }
-        catch (error) {
-            res.status(500).json({ message: error.message });
-            return;
-        }
-    }
-    async removeMember(id, req, res) {
-        try {
-            const user = req.user;
-            const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.DELETE_MEMBER, { id, user })
-                .toPromise();
-            res
-                .status(response.status_code)
-                .json({ ...response, status_code: undefined });
-            return;
-        }
-        catch (error) {
-            res.status(500).json({ message: error.message });
-            return;
-        }
-    }
-    async addCustomer(createCustomerDto, req, res) {
-        try {
-            const user = req.user;
-            const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.CREATE_CUSTOMER, {
-                createCustomerDto,
-                user,
-            })
-                .toPromise();
-            res
-                .status(response.status_code)
-                .json({ ...response, status_code: undefined });
-            return;
-        }
-        catch (error) {
-            res.status(500).json({ message: error.message });
-            return;
-        }
-    }
-    async getCustomer(id, req, res) {
-        try {
-            const user = req.user;
-            const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.GET_CUSTOMER, { id, user })
-                .toPromise();
-            res
-                .status(response.status_code)
-                .json({ ...response, status_code: undefined });
-            return;
-        }
-        catch (error) {
-            res.status(500).json({ message: error.message });
-            return;
-        }
-    }
-    async updateCustomer(id, updateCustomerDto, req, res) {
-        try {
-            const user = req.user;
-            const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.UPDATE_CUSTOMER, {
-                id,
-                updateCustomerDto,
-                user,
-            })
-                .toPromise();
-            res
-                .status(response.status_code)
-                .json({ ...response, status_code: undefined });
-            return;
-        }
-        catch (error) {
-            res.status(500).json({ message: error.message });
-            return;
-        }
-    }
-    async removeCustomer(id, req, res) {
-        try {
-            const user = req.user;
-            const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.DELETE_CUSTOMER, { id, user })
-                .toPromise();
-            res
-                .status(response.status_code)
-                .json({ ...response, status_code: undefined });
-            return;
-        }
-        catch (error) {
-            res.status(500).json({ message: error.message });
-            return;
-        }
-    }
-    async findAll(req, res) {
-        try {
-            const user = req.user;
-            const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.GET_STORES, { user })
                 .toPromise();
             res
                 .status(response.status_code)
@@ -404,6 +168,30 @@ let StoresController = class StoresController {
             return;
         }
     }
+    async getBranches(req, res, storeId, cursor, previousCursor, searchKey, orderBy, limit) {
+        try {
+            const user = req.user;
+            const response = await this.storesRpcService
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.GET_BRANCHES, {
+                user,
+                storeId,
+                limit: limit || 10,
+                cursor,
+                previousCursor,
+                orderBy,
+                searchKey,
+            })
+                .toPromise();
+            res
+                .status(response.status_code)
+                .json({ ...response, status_code: undefined });
+            return;
+        }
+        catch (error) {
+            res.status(500).json({ message: error.message });
+            return;
+        }
+    }
     async addProduct(createProductDto, req, res) {
         try {
             const user = req.user;
@@ -443,6 +231,30 @@ let StoresController = class StoresController {
             return;
         }
     }
+    async getProducts(req, res, storeId, cursorId, previousCursorId, searchKey, orderBy, limit) {
+        try {
+            const user = req.user;
+            const response = await this.storesRpcService
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.GET_PRODUCTS, {
+                user,
+                storeId,
+                limit: limit || 10,
+                cursorId,
+                previousCursorId,
+                orderBy,
+                searchKey,
+            })
+                .toPromise();
+            res
+                .status(response.status_code)
+                .json({ ...response, status_code: undefined });
+            return;
+        }
+        catch (error) {
+            res.status(500).json({ message: error.message });
+            return;
+        }
+    }
     async removeProduct(id, req, res) {
         try {
             const user = req.user;
@@ -461,62 +273,6 @@ let StoresController = class StoresController {
     }
 };
 exports.StoresController = StoresController;
-__decorate([
-    (0, swagger_1.ApiTags)('stores/products'),
-    (0, common_1.Get)('products'),
-    (0, swagger_1.ApiBearerAuth)(),
-    (0, swagger_1.ApiQuery)({ name: 'storeId', required: true }),
-    (0, swagger_1.ApiQuery)({ name: 'cursorId', required: false }),
-    (0, swagger_1.ApiQuery)({ name: 'previousCursorId', required: false }),
-    (0, swagger_1.ApiQuery)({ name: 'limit', required: false }),
-    (0, swagger_1.ApiQuery)({ name: 'orderBy', required: false }),
-    (0, swagger_1.ApiQuery)({ name: 'searchKey', required: false }),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Res)()),
-    __param(2, (0, common_1.Query)('storeId')),
-    __param(3, (0, common_1.Query)('cursorId')),
-    __param(4, (0, common_1.Query)('previousCursorId')),
-    __param(5, (0, common_1.Query)('searchKey')),
-    __param(6, (0, common_1.Query)('orderBy')),
-    __param(7, (0, common_1.Query)('limit')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, String, String, String, String, String, Number]),
-    __metadata("design:returntype", Promise)
-], StoresController.prototype, "getProducts", null);
-__decorate([
-    (0, swagger_1.ApiTags)('stores/branches'),
-    (0, common_1.Get)('branches'),
-    (0, swagger_1.ApiBearerAuth)(),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", Promise)
-], StoresController.prototype, "getBranches", null);
-__decorate([
-    (0, swagger_1.ApiTags)('stores/members'),
-    (0, common_1.Get)('members'),
-    (0, swagger_1.ApiBearerAuth)(),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", Promise)
-], StoresController.prototype, "getMembers", null);
-__decorate([
-    (0, swagger_1.ApiTags)('stores/customers'),
-    (0, common_1.Get)('customers'),
-    (0, swagger_1.ApiBearerAuth)(),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", Promise)
-], StoresController.prototype, "getCustomers", null);
 __decorate([
     (0, swagger_1.ApiTags)('stores'),
     (0, common_1.Post)(),
@@ -564,7 +320,7 @@ __decorate([
 ], StoresController.prototype, "update", null);
 __decorate([
     (0, swagger_1.ApiTags)('stores'),
-    (0, common_1.Delete)(':id'),
+    (0, common_1.Delete)('/:id'),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     __param(0, (0, common_1.Param)('id')),
@@ -574,115 +330,6 @@ __decorate([
     __metadata("design:paramtypes", [String, Object, Object]),
     __metadata("design:returntype", Promise)
 ], StoresController.prototype, "remove", null);
-__decorate([
-    (0, swagger_1.ApiTags)('stores/members'),
-    (0, common_1.Post)('members'),
-    (0, swagger_1.ApiBearerAuth)(),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Req)()),
-    __param(2, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_member_dto_1.CreateMemberDto, Object, Object]),
-    __metadata("design:returntype", Promise)
-], StoresController.prototype, "addMember", null);
-__decorate([
-    (0, swagger_1.ApiTags)('stores/members'),
-    (0, common_1.Get)('members/:uid'),
-    (0, swagger_1.ApiBearerAuth)(),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    __param(0, (0, common_1.Param)('uid')),
-    __param(1, (0, common_1.Req)()),
-    __param(2, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object, Object]),
-    __metadata("design:returntype", Promise)
-], StoresController.prototype, "getMember", null);
-__decorate([
-    (0, swagger_1.ApiTags)('stores/members'),
-    (0, common_1.Patch)('members/:id'),
-    (0, swagger_1.ApiBearerAuth)(),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
-    __param(2, (0, common_1.Req)()),
-    __param(3, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_member_dto_1.UpdateMemberDto, Object, Object]),
-    __metadata("design:returntype", Promise)
-], StoresController.prototype, "updateMember", null);
-__decorate([
-    (0, swagger_1.ApiTags)('stores/members'),
-    (0, common_1.Delete)('members/:id'),
-    (0, swagger_1.ApiBearerAuth)(),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Req)()),
-    __param(2, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object, Object]),
-    __metadata("design:returntype", Promise)
-], StoresController.prototype, "removeMember", null);
-__decorate([
-    (0, swagger_1.ApiTags)('stores/customers'),
-    (0, common_1.Post)('customers'),
-    (0, swagger_1.ApiBearerAuth)(),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Req)()),
-    __param(2, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_customer_dto_1.CreateCustomerDto, Object, Object]),
-    __metadata("design:returntype", Promise)
-], StoresController.prototype, "addCustomer", null);
-__decorate([
-    (0, swagger_1.ApiTags)('stores/customers'),
-    (0, common_1.Get)('customers/:id'),
-    (0, swagger_1.ApiBearerAuth)(),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Req)()),
-    __param(2, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object, Object]),
-    __metadata("design:returntype", Promise)
-], StoresController.prototype, "getCustomer", null);
-__decorate([
-    (0, swagger_1.ApiTags)('stores/customers'),
-    (0, common_1.Patch)('customers/:id'),
-    (0, swagger_1.ApiBearerAuth)(),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
-    __param(2, (0, common_1.Req)()),
-    __param(3, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, create_customer_dto_1.CreateCustomerDto, Object, Object]),
-    __metadata("design:returntype", Promise)
-], StoresController.prototype, "updateCustomer", null);
-__decorate([
-    (0, swagger_1.ApiTags)('stores/customers'),
-    (0, common_1.Delete)('customers/:id'),
-    (0, swagger_1.ApiBearerAuth)(),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Req)()),
-    __param(2, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object, Object]),
-    __metadata("design:returntype", Promise)
-], StoresController.prototype, "removeCustomer", null);
-__decorate([
-    (0, swagger_1.ApiTags)('stores'),
-    (0, common_1.Get)(),
-    (0, swagger_1.ApiBearerAuth)(),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", Promise)
-], StoresController.prototype, "findAll", null);
 __decorate([
     (0, swagger_1.ApiTags)('stores/branches'),
     (0, common_1.Post)('branches'),
@@ -733,6 +380,29 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], StoresController.prototype, "getBranch", null);
 __decorate([
+    (0, swagger_1.ApiTags)('stores/branches'),
+    (0, common_1.Get)('branches'),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, swagger_1.ApiQuery)({ name: 'storeId', required: true }),
+    (0, swagger_1.ApiQuery)({ name: 'cursor', required: false }),
+    (0, swagger_1.ApiQuery)({ name: 'previousCursor', required: false }),
+    (0, swagger_1.ApiQuery)({ name: 'limit', required: false }),
+    (0, swagger_1.ApiQuery)({ name: 'orderBy', required: false }),
+    (0, swagger_1.ApiQuery)({ name: 'searchKey', required: false }),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Query)('storeId')),
+    __param(3, (0, common_1.Query)('cursor')),
+    __param(4, (0, common_1.Query)('previousCursor')),
+    __param(5, (0, common_1.Query)('searchKey')),
+    __param(6, (0, common_1.Query)('orderBy')),
+    __param(7, (0, common_1.Query)('limit')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, String, String, String, String, String, Number]),
+    __metadata("design:returntype", Promise)
+], StoresController.prototype, "getBranches", null);
+__decorate([
     (0, swagger_1.ApiTags)('stores/products'),
     (0, common_1.Post)('products'),
     (0, swagger_1.ApiBearerAuth)(),
@@ -757,6 +427,29 @@ __decorate([
     __metadata("design:paramtypes", [String, create_product_dto_1.CreateProductDto, Object, Object]),
     __metadata("design:returntype", Promise)
 ], StoresController.prototype, "updateProduct", null);
+__decorate([
+    (0, swagger_1.ApiTags)('stores/products'),
+    (0, common_1.Get)('products'),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiQuery)({ name: 'storeId', required: true }),
+    (0, swagger_1.ApiQuery)({ name: 'cursorId', required: false }),
+    (0, swagger_1.ApiQuery)({ name: 'previousCursorId', required: false }),
+    (0, swagger_1.ApiQuery)({ name: 'limit', required: false }),
+    (0, swagger_1.ApiQuery)({ name: 'orderBy', required: false }),
+    (0, swagger_1.ApiQuery)({ name: 'searchKey', required: false }),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Query)('storeId')),
+    __param(3, (0, common_1.Query)('cursorId')),
+    __param(4, (0, common_1.Query)('previousCursorId')),
+    __param(5, (0, common_1.Query)('searchKey')),
+    __param(6, (0, common_1.Query)('orderBy')),
+    __param(7, (0, common_1.Query)('limit')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, String, String, String, String, String, Number]),
+    __metadata("design:returntype", Promise)
+], StoresController.prototype, "getProducts", null);
 __decorate([
     (0, swagger_1.ApiTags)('stores/products'),
     (0, common_1.Delete)('products/:id'),

@@ -1,19 +1,169 @@
-import { Controller, Get } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { CustomerRpcService } from './customer.rpc.service';
 import { MessagePatternEnum } from './enums/message-patterns.enum';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/common/guards/auth.guard';
+import { CreateCustomerDto } from './dto/create-customer.dto';
+import { Response } from 'express';
 
-@Controller('customer')
+@ApiTags('stores/customers')
+@Controller('customers')
 export class CustomerController {
   constructor(private readonly customerService: CustomerRpcService) {}
 
-  @Get()
-  ping() {
+  @Post()
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  async addCustomer(
+    @Body() createCustomerDto: CreateCustomerDto,
+    @Req() req: any,
+    @Res() res: Response,
+  ) {
     try {
-      return this.customerService.sendRequest(MessagePatternEnum.PING, {
-        test: 'customer-test',
-      });
+      const user = req.user;
+      const response = await this.customerService
+        .sendRequest(MessagePatternEnum.CREATE_CUSTOMER, {
+          createCustomerDto,
+          user,
+        })
+        .toPromise();
+      res
+        .status(response.status_code)
+        .json({ ...response, status_code: undefined });
+      return;
     } catch (error) {
-      console.log(error);
+      res.status(500).json({ message: error.message });
+      return;
+    }
+  }
+
+  @Get('/:id')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  async getCustomer(
+    @Param('id') id: string,
+    @Req() req: any,
+    @Res() res: Response,
+  ) {
+    try {
+      const user = req.user;
+      const response = await this.customerService
+        .sendRequest(MessagePatternEnum.GET_CUSTOMER, { id, user })
+        .toPromise();
+      res
+        .status(response.status_code)
+        .json({ ...response, status_code: undefined });
+      return;
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+      return;
+    }
+  }
+
+  @Get('/:id')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiQuery({ name: 'storeId', required: true })
+  @ApiQuery({ name: 'cursor', required: false })
+  @ApiQuery({ name: 'previousCursor', required: false })
+  @ApiQuery({ name: 'limit', required: false })
+  @ApiQuery({ name: 'orderBy', required: false })
+  @ApiQuery({ name: 'searchKey', required: false })
+  async getAllCustomer(
+    @Param('id') id: string,
+    @Req() req: any,
+    @Res() res: Response,
+    @Query('storeId') storeId: string,
+    @Query('cursor') cursor: string,
+    @Query('previousCursor') previousCursor: string,
+    @Query('searchKey') searchKey: string,
+    @Query('orderBy') orderBy: string,
+    @Query('limit') limit: number,
+  ) {
+    try {
+      const user = req.user;
+      const response = await this.customerService
+        .sendRequest(MessagePatternEnum.GET_CUSTOMER, {
+          id,
+          user,
+          storeId,
+          limit: limit || 10,
+          cursor,
+          previousCursor,
+          orderBy,
+          searchKey,
+        })
+        .toPromise();
+      res
+        .status(response.status_code)
+        .json({ ...response, status_code: undefined });
+      return;
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+      return;
+    }
+  }
+
+  @Patch('/:id')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  async updateCustomer(
+    @Param('id') id: string,
+    @Body() updateCustomerDto: CreateCustomerDto,
+    @Req() req: any,
+    @Res() res: Response,
+  ) {
+    try {
+      const user = req.user;
+      const response = await this.customerService
+        .sendRequest(MessagePatternEnum.UPDATE_CUSTOMER, {
+          id,
+          updateCustomerDto,
+          user,
+        })
+        .toPromise();
+      res
+        .status(response.status_code)
+        .json({ ...response, status_code: undefined });
+      return;
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+      return;
+    }
+  }
+
+  @Delete('/:id')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  async removeCustomer(
+    @Param('id') id: string,
+    @Req() req: any,
+    @Res() res: Response,
+  ) {
+    try {
+      const user = req.user;
+      const response = await this.customerService
+        .sendRequest(MessagePatternEnum.DELETE_CUSTOMER, { id, user })
+        .toPromise();
+      res
+        .status(response.status_code)
+        .json({ ...response, status_code: undefined });
+      return;
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+      return;
     }
   }
 }
