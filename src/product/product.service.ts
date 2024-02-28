@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { QueuesEnum } from 'src/common/enums';
 
 @Injectable()
-export class StoresRpcService {
+export class ProductsRpcService {
   private client: ClientProxy;
 
   constructor() {

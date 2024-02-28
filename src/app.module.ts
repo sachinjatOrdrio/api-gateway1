@@ -15,6 +15,9 @@ import { UserModule } from './user/user.module';
 import { DispatcherModule } from './dispatcher/dispatcher.module';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ProductModule } from './product/product.module';
+import { StorageModule } from './storage/storage.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -31,7 +34,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     // PromotionModule,
     // SaasModule,
     // SharedModule,
-     ThemeModule,
+    ThemeModule,
     // UserModule,
     // DispatcherModule,
     JwtModule.registerAsync({
@@ -42,6 +45,9 @@ import { MongooseModule } from '@nestjs/mongoose';
         signOptions: { expiresIn: configService.get<string>('JWT_EXPIRY') },
       }),
     }),
+    ProductModule,
+    StorageModule,
+    CategoriesModule,
   ],
 })
 export class AppModule {}

@@ -27,4 +27,5 @@ export enum MessagePatternEnum {
   GET_PRODUCT = 'get_product',
   UPDATE_PRODUCT = 'update_product',
   DELETE_PRODUCT = 'delete_product',
+  CREATE_VARIATION = 'create_variation',
 }

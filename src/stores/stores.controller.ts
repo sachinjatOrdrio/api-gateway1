@@ -9,6 +9,7 @@ import {
   UseGuards,
   Req,
   Res,
+  Query,
 } from '@nestjs/common';
 import { CreateStoreDto } from './dto/create-store.dto';
 import { UpdateStoreDto } from './dto/update-store.dto';
@@ -16,8 +17,9 @@ import { StoresRpcService } from './stores.rpc.service';
 import { MessagePatternEnum } from './enums/message-patterns.enum';
 import {
   ApiBearerAuth,
-  ApiBody,
   ApiOperation,
+  ApiParam,
+  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -28,22 +30,72 @@ import { UpdateMemberDto } from './dto/update-member.dto';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateBranchDto } from './dto/update-branch.dto';
 import { CreateBranchDto } from './dto/create-branch.dto';
-import { get } from 'http';
 import { CreateProductDto } from './dto/create-product.dto';
 
 @Controller('stores')
 export class StoresController {
   constructor(private readonly storesRpcService: StoresRpcService) {}
 
+  // @ApiTags('stores/products/variation')
+  // @Post('products/:id/variation')
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard)
+  // async createVariation(
+  //   @Body() CreateVariationDto: CreateVariationDto,
+  //   @Param('id') id: string,
+  //   @Req() req: any,
+  //   @Res() res: Response,
+  // ) {
+  //   try {
+  //     const user = req.user;
+  //     const response = await this.storesRpcService
+  //       .sendRequest(MessagePatternEnum.CREATE_VARIATION, {
+  //         CreateVariationDto,
+  //         user,
+  //       })
+  //       .toPromise();
+  //     res
+  //       .status(response.status_code)
+  //       .json({ ...response, status_code: undefined });
+  //     return;
+  //   } catch (error) {
+  //     res.status(500).json({ message: error.message });
+  //     return;
+  //   }
+  // }
+
   @ApiTags('stores/products')
   @Get('products')
   @ApiBearerAuth()
+  @ApiQuery({ name: 'storeId', required: true })
+  @ApiQuery({ name: 'cursorId', required: false })
+  @ApiQuery({ name: 'previousCursorId', required: false })
+  @ApiQuery({ name: 'limit', required: false })
+  @ApiQuery({ name: 'orderBy', required: false })
+  @ApiQuery({ name: 'searchKey', required: false })
   @UseGuards(AuthGuard)
-  async getProducts(@Req() req: any, @Res() res: Response) {
+  async getProducts(
+    @Req() req: any,
+    @Res() res: Response,
+    @Query('storeId') storeId: string,
+    @Query('cursorId') cursorId: string,
+    @Query('previousCursorId') previousCursorId: string,
+    @Query('searchKey') searchKey: string,
+    @Query('orderBy') orderBy: string,
+    @Query('limit') limit: number,
+  ) {
     try {
       const user = req.user;
       const response = await this.storesRpcService
-        .sendRequest(MessagePatternEnum.GET_PRODUCTS, { user })
+        .sendRequest(MessagePatternEnum.GET_PRODUCTS, {
+          user,
+          storeId,
+          limit: limit || 10,
+          cursorId,
+          previousCursorId,
+          orderBy,
+          searchKey,
+        })
         .toPromise();
       res
         .status(response.status_code)

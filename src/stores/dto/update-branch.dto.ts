@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsOptional } from 'class-validator';
 
 export class CreateDeliveryChargeDto {
   @ApiProperty()

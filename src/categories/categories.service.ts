@@ -8,15 +8,15 @@ import { Observable } from 'rxjs';
 import { QueuesEnum } from 'src/common/enums';
 
 @Injectable()
-export class StoresRpcService {
+export class CategoriesRpcService {
   private client: ClientProxy;
 
   constructor() {
     this.client = ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {
-        urls: ['amqp://user:UnRISD1TUE2x85ZW@20.204.233.105:5672'],
-        // urls: ['amqp://localhost'],
+        // urls: ['amqp://user:UnRISD1TUE2x85ZW@20.204.233.105:5672'],
+        urls: ['amqp://localhost'],
         queue: QueuesEnum.STORES,
       },
     });

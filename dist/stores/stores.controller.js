@@ -30,11 +30,19 @@ let StoresController = class StoresController {
     constructor(storesRpcService) {
         this.storesRpcService = storesRpcService;
     }
-    async getProducts(req, res) {
+    async getProducts(req, res, storeId, cursorId, previousCursorId, searchKey, orderBy, limit) {
         try {
             const user = req.user;
             const response = await this.storesRpcService
-                .sendRequest(message_patterns_enum_1.MessagePatternEnum.GET_PRODUCTS, { user })
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.GET_PRODUCTS, {
+                user,
+                storeId,
+                limit: limit || 10,
+                cursorId,
+                previousCursorId,
+                orderBy,
+                searchKey,
+            })
                 .toPromise();
             res
                 .status(response.status_code)
@@ -457,11 +465,23 @@ __decorate([
     (0, swagger_1.ApiTags)('stores/products'),
     (0, common_1.Get)('products'),
     (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiQuery)({ name: 'storeId', required: true }),
+    (0, swagger_1.ApiQuery)({ name: 'cursorId', required: false }),
+    (0, swagger_1.ApiQuery)({ name: 'previousCursorId', required: false }),
+    (0, swagger_1.ApiQuery)({ name: 'limit', required: false }),
+    (0, swagger_1.ApiQuery)({ name: 'orderBy', required: false }),
+    (0, swagger_1.ApiQuery)({ name: 'searchKey', required: false }),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Query)('storeId')),
+    __param(3, (0, common_1.Query)('cursorId')),
+    __param(4, (0, common_1.Query)('previousCursorId')),
+    __param(5, (0, common_1.Query)('searchKey')),
+    __param(6, (0, common_1.Query)('orderBy')),
+    __param(7, (0, common_1.Query)('limit')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object, Object, String, String, String, String, String, Number]),
     __metadata("design:returntype", Promise)
 ], StoresController.prototype, "getProducts", null);
 __decorate([
