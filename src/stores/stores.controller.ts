@@ -18,7 +18,6 @@ import { MessagePatternEnum } from './enums/message-patterns.enum';
 import {
   ApiBearerAuth,
   ApiOperation,
-  ApiParam,
   ApiQuery,
   ApiResponse,
   ApiTags,
