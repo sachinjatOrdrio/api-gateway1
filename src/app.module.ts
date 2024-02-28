@@ -14,10 +14,12 @@ import { ThemeModule } from './theme/theme.module';
 import { UserModule } from './user/user.module';
 import { DispatcherModule } from './dispatcher/dispatcher.module';
 import { JwtModule } from '@nestjs/jwt';
-import { MongooseModule } from '@nestjs/mongoose';
 import { ProductModule } from './product/product.module';
 import { StorageModule } from './storage/storage.module';
 import { CategoriesModule } from './categories/categories.module';
+import { MemberController } from './member/member.controller';
+import { MemberRpcService } from './member/member.rpc.service';
+import { MemberModule } from './member/member.module';
 
 @Module({
   imports: [
@@ -28,7 +30,8 @@ import { CategoriesModule } from './categories/categories.module';
     StoresModule,
     // CartModule,
     // CronModule,
-    // CustomerModule,
+    CustomerModule,
+    MemberModule,
     // OrderModule,
     // PaymentModule,
     // PromotionModule,
@@ -48,6 +51,9 @@ import { CategoriesModule } from './categories/categories.module';
     ProductModule,
     StorageModule,
     CategoriesModule,
+    MemberModule,
   ],
+  // controllers: [MemberController],
+  // providers: [MemberRpcService],
 })
 export class AppModule {}
