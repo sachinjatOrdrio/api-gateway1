@@ -21,6 +21,7 @@ import { MemberController } from './member/member.controller';
 import { MemberRpcService } from './member/member.rpc.service';
 import { MemberModule } from './member/member.module';
 import { RolesModule } from './roles/roles.module';
+import { BranchesModule } from './branches/branches.module';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { RolesModule } from './roles/roles.module';
     StorageModule,
     CategoriesModule,
     RolesModule,
+    BranchesModule,
   ],
   // controllers: [MemberController],
   // providers: [MemberRpcService],

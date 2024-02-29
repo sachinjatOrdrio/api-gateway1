@@ -9,7 +9,7 @@ import {
   UseGuards,
   Req,
   Res,
-  Query,
+  // Query,
 } from '@nestjs/common';
 import { CreateStoreDto } from './dto/create-store.dto';
 import { UpdateStoreDto } from './dto/update-store.dto';
@@ -18,15 +18,15 @@ import { MessagePatternEnum } from './enums/message-patterns.enum';
 import {
   ApiBearerAuth,
   ApiOperation,
-  ApiQuery,
+  // ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { AuthGuard } from 'src/common/guards/auth.guard';
 import { Response } from 'express';
-import { UpdateBranchDto } from './dto/update-branch.dto';
-import { CreateBranchDto } from './dto/create-branch.dto';
-import { CreateProductDto } from './dto/create-product.dto';
+// import { UpdateBranchDto } from './dto/update-branch.dto';
+// import { CreateBranchDto } from './dto/create-branch.dto';
+// import { CreateProductDto } from './dto/create-product.dto';
 
 @Controller('stores')
 export class StoresController {
@@ -159,275 +159,275 @@ export class StoresController {
   //   }
   // }
 
-  @ApiTags('stores/branches')
-  @Post('branches')
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard)
-  async addBranch(
-    @Body() createBranchDto: CreateBranchDto,
-    @Req() req: any,
-    @Res() res: Response,
-  ) {
-    try {
-      const user = req.user;
-      const response = await this.storesRpcService
-        .sendRequest(MessagePatternEnum.CREATE_BRANCH, {
-          createBranchDto,
-          user,
-        })
-        .toPromise();
-      res
-        .status(response.status_code)
-        .json({ ...response, status_code: undefined });
-      return;
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-      return;
-    }
-  }
+  // @ApiTags('stores/branches')
+  // @Post('branches')
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard)
+  // async addBranch(
+  //   @Body() createBranchDto: CreateBranchDto,
+  //   @Req() req: any,
+  //   @Res() res: Response,
+  // ) {
+  //   try {
+  //     const user = req.user;
+  //     const response = await this.storesRpcService
+  //       .sendRequest(MessagePatternEnum.CREATE_BRANCH, {
+  //         createBranchDto,
+  //         user,
+  //       })
+  //       .toPromise();
+  //     res
+  //       .status(response.status_code)
+  //       .json({ ...response, status_code: undefined });
+  //     return;
+  //   } catch (error) {
+  //     res.status(500).json({ message: error.message });
+  //     return;
+  //   }
+  // }
 
-  @ApiTags('stores/branches')
-  @Patch('branches/:id')
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard)
-  async updateBranch(
-    @Param('id') id: string,
-    @Body() updateBranchDto: UpdateBranchDto,
-    @Req() req: any,
-    @Res() res: Response,
-  ) {
-    try {
-      const user = req.user;
-      const response = await this.storesRpcService
-        .sendRequest(MessagePatternEnum.UPDATE_BRANCH, {
-          id,
-          updateBranchDto,
-          user,
-        })
-        .toPromise();
-      res
-        .status(response.status_code)
-        .json({ ...response, status_code: undefined });
-      return;
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-      return;
-    }
-  }
+  // @ApiTags('stores/branches')
+  // @Patch('branches/:id')
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard)
+  // async updateBranch(
+  //   @Param('id') id: string,
+  //   @Body() updateBranchDto: UpdateBranchDto,
+  //   @Req() req: any,
+  //   @Res() res: Response,
+  // ) {
+  //   try {
+  //     const user = req.user;
+  //     const response = await this.storesRpcService
+  //       .sendRequest(MessagePatternEnum.UPDATE_BRANCH, {
+  //         id,
+  //         updateBranchDto,
+  //         user,
+  //       })
+  //       .toPromise();
+  //     res
+  //       .status(response.status_code)
+  //       .json({ ...response, status_code: undefined });
+  //     return;
+  //   } catch (error) {
+  //     res.status(500).json({ message: error.message });
+  //     return;
+  //   }
+  // }
 
-  @ApiTags('stores/branches')
-  @Delete('branches/:id')
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard)
-  async removeBranch(
-    @Param('id') id: string,
-    @Req() req: any,
-    @Res() res: Response,
-  ) {
-    try {
-      const user = req.user;
-      const response = await this.storesRpcService
-        .sendRequest(MessagePatternEnum.DELETE_BRANCH, { id, user })
-        .toPromise();
-      res
-        .status(response.status_code)
-        .json({ ...response, status_code: undefined });
-      return;
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-      return;
-    }
-  }
+  // @ApiTags('stores/branches')
+  // @Delete('branches/:id')
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard)
+  // async removeBranch(
+  //   @Param('id') id: string,
+  //   @Req() req: any,
+  //   @Res() res: Response,
+  // ) {
+  //   try {
+  //     const user = req.user;
+  //     const response = await this.storesRpcService
+  //       .sendRequest(MessagePatternEnum.DELETE_BRANCH, { id, user })
+  //       .toPromise();
+  //     res
+  //       .status(response.status_code)
+  //       .json({ ...response, status_code: undefined });
+  //     return;
+  //   } catch (error) {
+  //     res.status(500).json({ message: error.message });
+  //     return;
+  //   }
+  // }
 
-  @ApiTags('stores/branches')
-  @Get('branches/:id')
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard)
-  async getBranch(
-    @Param('id') id: string,
-    @Req() req: any,
-    @Res() res: Response,
-  ) {
-    try {
-      const user = req.user;
-      const response = await this.storesRpcService
-        .sendRequest(MessagePatternEnum.GET_BRANCH, { id, user })
-        .toPromise();
-      res
-        .status(response.status_code)
-        .json({ ...response, status_code: undefined });
-      return;
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-      return;
-    }
-  }
+  // @ApiTags('stores/branches')
+  // @Get('branches/:id')
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard)
+  // async getBranch(
+  //   @Param('id') id: string,
+  //   @Req() req: any,
+  //   @Res() res: Response,
+  // ) {
+  //   try {
+  //     const user = req.user;
+  //     const response = await this.storesRpcService
+  //       .sendRequest(MessagePatternEnum.GET_BRANCH, { id, user })
+  //       .toPromise();
+  //     res
+  //       .status(response.status_code)
+  //       .json({ ...response, status_code: undefined });
+  //     return;
+  //   } catch (error) {
+  //     res.status(500).json({ message: error.message });
+  //     return;
+  //   }
+  // }
 
-  @ApiTags('stores/branches')
-  @Get('branches')
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard)
-  @ApiQuery({ name: 'storeId', required: true })
-  @ApiQuery({ name: 'cursor', required: false })
-  @ApiQuery({ name: 'previousCursor', required: false })
-  @ApiQuery({ name: 'limit', required: false })
-  @ApiQuery({ name: 'orderBy', required: false })
-  @ApiQuery({ name: 'searchKey', required: false })
-  async getBranches(
-    @Req() req: any,
-    @Res() res: Response,
-    @Query('storeId') storeId: string,
-    @Query('cursor') cursor: string,
-    @Query('previousCursor') previousCursor: string,
-    @Query('searchKey') searchKey: string,
-    @Query('orderBy') orderBy: string,
-    @Query('limit') limit: number,
-  ) {
-    try {
-      const user = req.user;
-      const response = await this.storesRpcService
-        .sendRequest(MessagePatternEnum.GET_BRANCHES, {
-          user,
-          storeId,
-          limit: limit || 10,
-          cursor,
-          previousCursor,
-          orderBy,
-          searchKey,
-        })
-        .toPromise();
-      res
-        .status(response.status_code)
-        .json({ ...response, status_code: undefined });
-      return;
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-      return;
-    }
-  }
+  // @ApiTags('stores/branches')
+  // @Get('branches')
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard)
+  // @ApiQuery({ name: 'storeId', required: true })
+  // @ApiQuery({ name: 'cursor', required: false })
+  // @ApiQuery({ name: 'previousCursor', required: false })
+  // @ApiQuery({ name: 'limit', required: false })
+  // @ApiQuery({ name: 'orderBy', required: false })
+  // @ApiQuery({ name: 'searchKey', required: false })
+  // async getBranches(
+  //   @Req() req: any,
+  //   @Res() res: Response,
+  //   @Query('storeId') storeId: string,
+  //   @Query('cursor') cursor: string,
+  //   @Query('previousCursor') previousCursor: string,
+  //   @Query('searchKey') searchKey: string,
+  //   @Query('orderBy') orderBy: string,
+  //   @Query('limit') limit: number,
+  // ) {
+  //   try {
+  //     const user = req.user;
+  //     const response = await this.storesRpcService
+  //       .sendRequest(MessagePatternEnum.GET_BRANCHES, {
+  //         user,
+  //         storeId,
+  //         limit: limit || 10,
+  //         cursor,
+  //         previousCursor,
+  //         orderBy,
+  //         searchKey,
+  //       })
+  //       .toPromise();
+  //     res
+  //       .status(response.status_code)
+  //       .json({ ...response, status_code: undefined });
+  //     return;
+  //   } catch (error) {
+  //     res.status(500).json({ message: error.message });
+  //     return;
+  //   }
+  // }
 
-  @ApiTags('stores/products')
-  @Post('products')
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard)
-  async addProduct(
-    @Body() createProductDto: CreateProductDto,
-    @Req() req: any,
-    @Res() res: Response,
-  ) {
-    try {
-      const user = req.user;
-      const response = await this.storesRpcService
-        .sendRequest(MessagePatternEnum.CREATE_PRODUCT, {
-          createProductDto,
-          user,
-        })
-        .toPromise();
-      res
-        .status(response.status_code)
-        .json({ ...response, status_code: undefined });
-      return;
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-      return;
-    }
-  }
+  // @ApiTags('stores/products')
+  // @Post()
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard)
+  // async addProduct(
+  //   @Body() createProductDto: CreateProductDto,
+  //   @Req() req: any,
+  //   @Res() res: Response,
+  // ) {
+  //   try {
+  //     const user = req.user;
+  //     const response = await this.storesRpcService
+  //       .sendRequest(MessagePatternEnum.CREATE_PRODUCT, {
+  //         createProductDto,
+  //         user,
+  //       })
+  //       .toPromise();
+  //     res
+  //       .status(response.status_code)
+  //       .json({ ...response, status_code: undefined });
+  //     return;
+  //   } catch (error) {
+  //     res.status(500).json({ message: error.message });
+  //     return;
+  //   }
+  // }
 
-  @ApiTags('stores/products')
-  @Patch('products/:id')
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard)
-  async updateProduct(
-    @Param('id') id: string,
-    @Body() updateProductDto: CreateProductDto,
-    @Req() req: any,
-    @Res() res: Response,
-  ) {
-    try {
-      const user = req.user;
-      const response = await this.storesRpcService
-        .sendRequest(MessagePatternEnum.UPDATE_PRODUCT, {
-          id,
-          updateProductDto,
-          user,
-        })
-        .toPromise();
-      res
-        .status(response.status_code)
-        .json({ ...response, status_code: undefined });
-      return;
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-      return;
-    }
-  }
+  // @ApiTags('stores/products')
+  // @Patch('/:id')
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard)
+  // async updateProduct(
+  //   @Param('id') id: string,
+  //   @Body() updateProductDto: CreateProductDto,
+  //   @Req() req: any,
+  //   @Res() res: Response,
+  // ) {
+  //   try {
+  //     const user = req.user;
+  //     const response = await this.storesRpcService
+  //       .sendRequest(MessagePatternEnum.UPDATE_PRODUCT, {
+  //         id,
+  //         updateProductDto,
+  //         user,
+  //       })
+  //       .toPromise();
+  //     res
+  //       .status(response.status_code)
+  //       .json({ ...response, status_code: undefined });
+  //     return;
+  //   } catch (error) {
+  //     res.status(500).json({ message: error.message });
+  //     return;
+  //   }
+  // }
 
-  @ApiTags('stores/products')
-  @Get('products')
-  @ApiBearerAuth()
-  @ApiQuery({ name: 'storeId', required: true })
-  @ApiQuery({ name: 'cursorId', required: false })
-  @ApiQuery({ name: 'previousCursorId', required: false })
-  @ApiQuery({ name: 'limit', required: false })
-  @ApiQuery({ name: 'orderBy', required: false })
-  @ApiQuery({ name: 'searchKey', required: false })
-  @UseGuards(AuthGuard)
-  async getProducts(
-    @Req() req: any,
-    @Res() res: Response,
-    @Query('storeId') storeId: string,
-    @Query('cursorId') cursorId: string,
-    @Query('previousCursorId') previousCursorId: string,
-    @Query('searchKey') searchKey: string,
-    @Query('orderBy') orderBy: string,
-    @Query('limit') limit: number,
-  ) {
-    try {
-      const user = req.user;
-      const response = await this.storesRpcService
-        .sendRequest(MessagePatternEnum.GET_PRODUCTS, {
-          user,
-          storeId,
-          limit: limit || 10,
-          cursorId,
-          previousCursorId,
-          orderBy,
-          searchKey,
-        })
-        .toPromise();
-      res
-        .status(response.status_code)
-        .json({ ...response, status_code: undefined });
-      return;
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-      return;
-    }
-  }
+  // @ApiTags('stores/products')
+  // @Get()
+  // @ApiBearerAuth()
+  // @ApiQuery({ name: 'storeId', required: true })
+  // @ApiQuery({ name: 'cursorId', required: false })
+  // @ApiQuery({ name: 'previousCursorId', required: false })
+  // @ApiQuery({ name: 'limit', required: false })
+  // @ApiQuery({ name: 'orderBy', required: false })
+  // @ApiQuery({ name: 'searchKey', required: false })
+  // @UseGuards(AuthGuard)
+  // async getProducts(
+  //   @Req() req: any,
+  //   @Res() res: Response,
+  //   @Query('storeId') storeId: string,
+  //   @Query('cursorId') cursorId: string,
+  //   @Query('previousCursorId') previousCursorId: string,
+  //   @Query('searchKey') searchKey: string,
+  //   @Query('orderBy') orderBy: string,
+  //   @Query('limit') limit: number,
+  // ) {
+  //   try {
+  //     const user = req.user;
+  //     const response = await this.storesRpcService
+  //       .sendRequest(MessagePatternEnum.GET_PRODUCTS, {
+  //         user,
+  //         storeId,
+  //         limit: limit || 10,
+  //         cursorId,
+  //         previousCursorId,
+  //         orderBy,
+  //         searchKey,
+  //       })
+  //       .toPromise();
+  //     res
+  //       .status(response.status_code)
+  //       .json({ ...response, status_code: undefined });
+  //     return;
+  //   } catch (error) {
+  //     res.status(500).json({ message: error.message });
+  //     return;
+  //   }
+  // }
 
-  @ApiTags('stores/products')
-  @Delete('products/:id')
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard)
-  async removeProduct(
-    @Param('id') id: string,
-    @Req() req: any,
-    @Res() res: Response,
-  ) {
-    try {
-      const user = req.user;
-      const response = await this.storesRpcService
-        .sendRequest(MessagePatternEnum.DELETE_PRODUCT, { id, user })
-        .toPromise();
-      res
-        .status(response.status_code)
-        .json({ ...response, status_code: undefined });
-      return;
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-      return;
-    }
-  }
+  // @ApiTags('stores/products')
+  // @Delete('/:id')
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard)
+  // async removeProduct(
+  //   @Param('id') id: string,
+  //   @Req() req: any,
+  //   @Res() res: Response,
+  // ) {
+  //   try {
+  //     const user = req.user;
+  //     const response = await this.storesRpcService
+  //       .sendRequest(MessagePatternEnum.DELETE_PRODUCT, { id, user })
+  //       .toPromise();
+  //     res
+  //       .status(response.status_code)
+  //       .json({ ...response, status_code: undefined });
+  //     return;
+  //   } catch (error) {
+  //     res.status(500).json({ message: error.message });
+  //     return;
+  //   }
+  // }
 
   // @ApiTags('stores/members')
   // @Post('members')
