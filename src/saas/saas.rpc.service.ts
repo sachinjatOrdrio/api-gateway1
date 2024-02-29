@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import {
   ClientProxy,
   ClientProxyFactory,
@@ -11,7 +12,7 @@ import { QueuesEnum } from 'src/common/enums';
 export class SaasRpcService {
   private client: ClientProxy;
 
-  constructor() {
+  constructor(private readonly configService: ConfigService) {
     this.client = ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {

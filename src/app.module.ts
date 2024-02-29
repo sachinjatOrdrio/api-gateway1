@@ -51,7 +51,6 @@ import { MemberModule } from './member/member.module';
     ProductModule,
     StorageModule,
     CategoriesModule,
-    MemberModule,
   ],
   // controllers: [MemberController],
   // providers: [MemberRpcService],

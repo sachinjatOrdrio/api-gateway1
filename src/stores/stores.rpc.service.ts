@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import {
   ClientProxy,
   ClientProxyFactory,
@@ -11,12 +12,11 @@ import { QueuesEnum } from 'src/common/enums';
 export class StoresRpcService {
   private client: ClientProxy;
 
-  constructor() {
+  constructor(private readonly configService: ConfigService) {
     this.client = ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {
-        urls: ['amqp://user:UnRISD1TUE2x85ZW@20.204.233.105:5672'],
-        // urls: ['amqp://localhost'],
+        urls: [this.configService.get('RABBITMQ_URL')],
         queue: QueuesEnum.STORES,
       },
     });

@@ -115,9 +115,8 @@ export class MemberController {
       const response = await this.memberRpcService
         .sendRequest(MessagePatternEnum.GET_MEMBER, { uid, user })
         .toPromise();
-      res
-        .status(response.status_code)
-        .json({ ...response, status_code: undefined });
+      const status_code = response.status_code || 200;
+      res.status(status_code).json(response);
       return;
     } catch (error) {
       res.status(500).json({ message: error.message });
