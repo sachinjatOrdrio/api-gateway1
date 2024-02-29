@@ -20,6 +20,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { MemberController } from './member/member.controller';
 import { MemberRpcService } from './member/member.rpc.service';
 import { MemberModule } from './member/member.module';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { MemberModule } from './member/member.module';
     ProductModule,
     StorageModule,
     CategoriesModule,
+    RolesModule,
   ],
   // controllers: [MemberController],
   // providers: [MemberRpcService],
