@@ -76,8 +76,7 @@ export class CustomerController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @ApiQuery({ name: 'storeId', required: true })
-  @ApiQuery({ name: 'cursor', required: false })
-  @ApiQuery({ name: 'previousCursor', required: false })
+  @ApiQuery({ name: 'page', required: false })
   @ApiQuery({ name: 'limit', required: false })
   @ApiQuery({ name: 'orderBy', required: false })
   @ApiQuery({ name: 'searchKey', required: false })
@@ -86,8 +85,7 @@ export class CustomerController {
     @Req() req: any,
     @Res() res: Response,
     @Query('storeId') storeId: string,
-    @Query('cursor') cursor: string,
-    @Query('previousCursor') previousCursor: string,
+    @Query('page') cursor: string,
     @Query('searchKey') searchKey: string,
     @Query('orderBy') orderBy: string,
     @Query('limit') limit: number,
@@ -101,7 +99,6 @@ export class CustomerController {
           storeId,
           limit: limit || 10,
           cursor,
-          previousCursor,
           orderBy,
           searchKey,
         })
