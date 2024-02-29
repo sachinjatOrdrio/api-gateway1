@@ -135,8 +135,8 @@ export class RoleController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @ApiQuery({ name: 'storeId', required: true })
-  @ApiQuery({ name: 'cursor', required: false })
-  @ApiQuery({ name: 'previousCursor', required: false })
+  @ApiQuery({ name: 'page', required: false })
+  @ApiQuery({ name: 'descending', required: false })
   @ApiQuery({ name: 'limit', required: false })
   @ApiQuery({ name: 'orderBy', required: false })
   @ApiQuery({ name: 'searchKey', required: false })
@@ -144,8 +144,8 @@ export class RoleController {
     @Req() req: any,
     @Res() res: Response,
     @Query('storeId') storeId: string,
-    @Query('cursor') cursor: string,
-    @Query('previousCursor') previousCursor: string,
+    @Query('page') page: string,
+    @Query('descending') descending: string,
     @Query('searchKey') searchKey: string,
     @Query('orderBy') orderBy: string,
     @Query('limit') limit: number,
@@ -157,9 +157,9 @@ export class RoleController {
           user,
           storeId,
           limit: limit || 10,
-          cursor,
-          previousCursor,
-          orderBy,
+          page: page || 1,
+          descending: descending || "false",
+          orderBy: orderBy || "createdAt",
           searchKey,
         })
         .toPromise();
