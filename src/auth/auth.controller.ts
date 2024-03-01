@@ -103,13 +103,13 @@ export class AuthController {
   //   });
   // }
 
-  // @Post('/forgotpassword')
-  // forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
-  //   return this.rabbitRPC.sendRequest(
-  //     MessagePatternEnum.FORGOT_PASSWORD,
-  //     forgotPasswordDto,
-  //   );
-  // }
+  @Post('/forgotpassword')
+  forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
+    return this.rabbitRPC.sendRequest(
+      MessagePatternEnum.FORGOT_PASSWORD,
+      forgotPasswordDto,
+    );
+  }
 
   // @Post('/resendemail')
   // resendEmail(@Body() resendEmailDto: ResendEmailDto) {
@@ -138,11 +138,24 @@ export class AuthController {
     }
   }
 
-  // @Get('verify:id')
-  // @ApiParam({ name: 'id', type: String })
-  // verifyId(@Param('id') id: string) {
-  //   return this.rabbitRPC.sendRequest(MessagePatternEnum.VERIFY_ID, id);
-  // }
+  @Get('verify/:id')
+  @ApiParam({ name: 'id', type: String })
+  async verifyId(@Param('id') id: string, @Res() res: Response) {
+    try {
+      // return this.rabbitRPC.sendRequest(MessagePatternEnum.VERIFY_ID, id);
+      const response: any = await this.rabbitRPC
+        .sendRequest(MessagePatternEnum.VERIFY_ID, id)
+        .toPromise();
+      console.log(response);
+      res
+        .status(response.status_code)
+        .json({ ...response, status_code: undefined });
+      return;
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+      return;
+    }
+  }
 
   @Post('phone-register')
   async phoneRegister(

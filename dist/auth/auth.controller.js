@@ -19,6 +19,7 @@ const swagger_1 = require("@nestjs/swagger");
 const phone_login_dto_1 = require("./dto/phone-login.dto");
 const verify_otp_dto_1 = require("./dto/verify-otp.dto");
 const login_dto_1 = require("./dto/login.dto");
+const forgot_password_dto_1 = require("./dto/forgot-password.dto");
 const social_login_dto_1 = require("./dto/social-login.dto");
 const phone_register_dto_1 = require("./dto/phone-register.dto");
 const social_auth_dto_1 = require("./dto/social-auth.dto");
@@ -89,11 +90,30 @@ let AuthController = class AuthController {
             return;
         }
     }
+    forgotPassword(forgotPasswordDto) {
+        return this.rabbitRPC.sendRequest(message_patterns_enum_1.MessagePatternEnum.FORGOT_PASSWORD, forgotPasswordDto);
+    }
     async socialLogin(socialLoginDto, res) {
         try {
             const response = await this.rabbitRPC
                 .sendRequest(message_patterns_enum_1.MessagePatternEnum.SOCIAL_LOGIN, socialLoginDto)
                 .toPromise();
+            res
+                .status(response.status_code)
+                .json({ ...response, status_code: undefined });
+            return;
+        }
+        catch (error) {
+            res.status(500).json({ message: error.message });
+            return;
+        }
+    }
+    async verifyId(id, res) {
+        try {
+            const response = await this.rabbitRPC
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.VERIFY_ID, id)
+                .toPromise();
+            console.log(response);
             res
                 .status(response.status_code)
                 .json({ ...response, status_code: undefined });
@@ -170,6 +190,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "login", null);
 __decorate([
+    (0, common_1.Post)('/forgotpassword'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [forgot_password_dto_1.ForgotPasswordDto]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "forgotPassword", null);
+__decorate([
     (0, common_1.Post)('social-login'),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Res)()),
@@ -177,6 +204,15 @@ __decorate([
     __metadata("design:paramtypes", [social_login_dto_1.SocialLoginDto, Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "socialLogin", null);
+__decorate([
+    (0, common_1.Get)('verify/:id'),
+    (0, swagger_1.ApiParam)({ name: 'id', type: String }),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "verifyId", null);
 __decorate([
     (0, common_1.Post)('phone-register'),
     __param(0, (0, common_1.Body)()),
