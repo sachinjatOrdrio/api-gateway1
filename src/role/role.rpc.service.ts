@@ -6,17 +6,17 @@ import {
 } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import { QueuesEnum } from 'src/common/enums';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class RoleRpcService {
   private client: ClientProxy;
 
-  constructor() {
+  constructor(private readonly configService: ConfigService) {
     this.client = ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {
-        urls: ['amqp://user:UnRISD1TUE2x85ZW@20.204.233.105:5672'],
-        // urls: ['amqp://localhost'],
+        urls: [this.configService.get('RABBITMQ_URL')],
         queue: QueuesEnum.AUTH,
       },
     });
