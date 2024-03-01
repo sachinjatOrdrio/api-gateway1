@@ -102,18 +102,20 @@ export class MemberController {
   }
 
   @Get()
-  @ApiQuery({ name: 'uid', required: true })
+  @ApiQuery({ name: 'uid', required: false })
+  @ApiQuery({ name: 'storeId', required: false })
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   async getMember(
     @Query('uid') uid: string,
+    @Query('storeId') storeId: string,
     @Req() req: any,
     @Res() res: Response,
   ) {
     try {
       const user = req.user;
       const response = await this.memberRpcService
-        .sendRequest(MessagePatternEnum.GET_MEMBER, { uid, user })
+        .sendRequest(MessagePatternEnum.GET_MEMBER, { uid,storeId, user })
         .toPromise();
       const status_code = response.status_code || 200;
       res.status(status_code).json(response);
