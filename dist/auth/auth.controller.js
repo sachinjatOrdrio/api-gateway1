@@ -47,6 +47,22 @@ let AuthController = class AuthController {
             return;
         }
     }
+    async resendEmail(resendEmailDto, res) {
+        try {
+            const response = await this.rabbitRPC
+                .sendRequest(message_patterns_enum_1.MessagePatternEnum.RESEND_EMAIL, resendEmailDto)
+                .toPromise();
+            res
+                .status(response.status_code)
+                .json({ ...response, status_code: undefined });
+            return;
+        }
+        catch (error) {
+            console.log('AuthController', error);
+            res.status(500).json({ message: error.message });
+            return;
+        }
+    }
     async phoneLogin(phoneLoginAuthDto, res) {
         try {
             const response = await this.rabbitRPC
@@ -93,9 +109,6 @@ let AuthController = class AuthController {
     }
     forgotPassword(forgotPasswordDto) {
         return this.rabbitRPC.sendRequest(message_patterns_enum_1.MessagePatternEnum.FORGOT_PASSWORD, forgotPasswordDto);
-    }
-    resendEmail(resendEmailDto) {
-        return this.rabbitRPC.sendRequest(message_patterns_enum_1.MessagePatternEnum.RESEND_EMAIL, resendEmailDto);
     }
     async socialLogin(socialLoginDto, res) {
         try {
@@ -170,6 +183,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "signUp", null);
 __decorate([
+    (0, common_1.Post)('/resend-email'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [resend_email_dto_1.ResendEmailDto, Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "resendEmail", null);
+__decorate([
     (0, common_1.Post)('/phone-login'),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Res)()),
@@ -200,13 +221,6 @@ __decorate([
     __metadata("design:paramtypes", [forgot_password_dto_1.ForgotPasswordDto]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "forgotPassword", null);
-__decorate([
-    (0, common_1.Post)('/resend-email'),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [resend_email_dto_1.ResendEmailDto]),
-    __metadata("design:returntype", void 0)
-], AuthController.prototype, "resendEmail", null);
 __decorate([
     (0, common_1.Post)('social-login'),
     __param(0, (0, common_1.Body)()),
