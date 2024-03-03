@@ -19,7 +19,7 @@ import { Response } from 'express';
 @Controller('auth')
 @ApiTags('auth')
 export class AuthController {
-  constructor(private readonly rabbitRPC: AuthRpcService) {}
+  constructor(private readonly rabbitRPC: AuthRpcService) { }
   @Post('/register')
   async signUp(
     @Body() createAuthDto: CreateAuthDto,

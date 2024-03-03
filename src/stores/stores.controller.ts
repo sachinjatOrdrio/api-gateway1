@@ -30,7 +30,7 @@ import { Response } from 'express';
 
 @Controller('stores')
 export class StoresController {
-  constructor(private readonly storesRpcService: StoresRpcService) {}
+  constructor(private readonly storesRpcService: StoresRpcService) { }
 
   @ApiTags('stores')
   @Post()
