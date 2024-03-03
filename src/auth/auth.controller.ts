@@ -29,7 +29,7 @@ export class AuthController {
       const response = await this.rabbitRPC
         .sendRequest(MessagePatternEnum.REGISTER, createAuthDto)
         .toPromise();
-      console.log(response);
+      console.log('response: ', response);
       res
         .status(response.status_code)
         .json({ ...response, status_code: undefined });
@@ -111,13 +111,13 @@ export class AuthController {
     );
   }
 
-  // @Post('/resendemail')
-  // resendEmail(@Body() resendEmailDto: ResendEmailDto) {
-  //   return this.rabbitRPC.sendRequest(
-  //     MessagePatternEnum.RESEND_EMAIL,
-  //     resendEmailDto,
-  //   );
-  // }
+  @Post('/resend-email')
+  resendEmail(@Body() resendEmailDto: ResendEmailDto) {
+    return this.rabbitRPC.sendRequest(
+      MessagePatternEnum.RESEND_EMAIL,
+      resendEmailDto,
+    );
+  }
 
   @Post('social-login')
   async socialLogin(

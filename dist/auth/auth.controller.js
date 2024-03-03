@@ -20,6 +20,7 @@ const phone_login_dto_1 = require("./dto/phone-login.dto");
 const verify_otp_dto_1 = require("./dto/verify-otp.dto");
 const login_dto_1 = require("./dto/login.dto");
 const forgot_password_dto_1 = require("./dto/forgot-password.dto");
+const resend_email_dto_1 = require("./dto/resend-email.dto");
 const social_login_dto_1 = require("./dto/social-login.dto");
 const phone_register_dto_1 = require("./dto/phone-register.dto");
 const social_auth_dto_1 = require("./dto/social-auth.dto");
@@ -34,7 +35,7 @@ let AuthController = class AuthController {
             const response = await this.rabbitRPC
                 .sendRequest(message_patterns_enum_1.MessagePatternEnum.REGISTER, createAuthDto)
                 .toPromise();
-            console.log(response);
+            console.log('response: ', response);
             res
                 .status(response.status_code)
                 .json({ ...response, status_code: undefined });
@@ -92,6 +93,9 @@ let AuthController = class AuthController {
     }
     forgotPassword(forgotPasswordDto) {
         return this.rabbitRPC.sendRequest(message_patterns_enum_1.MessagePatternEnum.FORGOT_PASSWORD, forgotPasswordDto);
+    }
+    resendEmail(resendEmailDto) {
+        return this.rabbitRPC.sendRequest(message_patterns_enum_1.MessagePatternEnum.RESEND_EMAIL, resendEmailDto);
     }
     async socialLogin(socialLoginDto, res) {
         try {
@@ -196,6 +200,13 @@ __decorate([
     __metadata("design:paramtypes", [forgot_password_dto_1.ForgotPasswordDto]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "forgotPassword", null);
+__decorate([
+    (0, common_1.Post)('/resend-email'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [resend_email_dto_1.ResendEmailDto]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "resendEmail", null);
 __decorate([
     (0, common_1.Post)('social-login'),
     __param(0, (0, common_1.Body)()),

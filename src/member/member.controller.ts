@@ -5,14 +5,14 @@ import {
   UseGuards,
   Req,
   Res,
-  Delete,
-  Param,
-  Patch,
+  // Delete,
+  // Param,
+  // Patch,
   Get,
   Query,
 } from '@nestjs/common';
 import { CreateMemberDto } from './dto/create-member.dto';
-import { UpdateMemberDto } from './dto/update-member.dto';
+// import { UpdateMemberDto } from './dto/update-member.dto';
 import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/common/guards/auth.guard';
 import { Response } from 'express';
@@ -50,56 +50,56 @@ export class MemberController {
     }
   }
 
-  @Delete('/:id')
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard)
-  async removeMember(
-    @Param('id') id: string,
-    @Req() req: any,
-    @Res() res: Response,
-  ) {
-    try {
-      const user = req.user;
-      const response = await this.memberRpcService
-        .sendRequest(MessagePatternEnum.DELETE_MEMBER, { id, user })
-        .toPromise();
-      res
-        .status(response.status_code)
-        .json({ ...response, status_code: undefined });
-      return;
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-      return;
-    }
-  }
+  // @Delete('/:id')
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard)
+  // async removeMember(
+  //   @Param('id') id: string,
+  //   @Req() req: any,
+  //   @Res() res: Response,
+  // ) {
+  //   try {
+  //     const user = req.user;
+  //     const response = await this.memberRpcService
+  //       .sendRequest(MessagePatternEnum.DELETE_MEMBER, { id, user })
+  //       .toPromise();
+  //     res
+  //       .status(response.status_code)
+  //       .json({ ...response, status_code: undefined });
+  //     return;
+  //   } catch (error) {
+  //     res.status(500).json({ message: error.message });
+  //     return;
+  //   }
+  // }
 
-  @Patch('/:id')
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard)
-  async updateMember(
-    @Param('id') id: string,
-    @Body() updateMemberDto: UpdateMemberDto,
-    @Req() req: any,
-    @Res() res: Response,
-  ) {
-    try {
-      const user = req.user;
-      const response = await this.memberRpcService
-        .sendRequest(MessagePatternEnum.UPDATE_MEMBER, {
-          id,
-          updateMemberDto,
-          user,
-        })
-        .toPromise();
-      res
-        .status(response.status_code)
-        .json({ ...response, status_code: undefined });
-      return;
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-      return;
-    }
-  }
+  // @Patch('/:id')
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard)
+  // async updateMember(
+  //   @Param('id') id: string,
+  //   @Body() updateMemberDto: UpdateMemberDto,
+  //   @Req() req: any,
+  //   @Res() res: Response,
+  // ) {
+  //   try {
+  //     const user = req.user;
+  //     const response = await this.memberRpcService
+  //       .sendRequest(MessagePatternEnum.UPDATE_MEMBER, {
+  //         id,
+  //         updateMemberDto,
+  //         user,
+  //       })
+  //       .toPromise();
+  //     res
+  //       .status(response.status_code)
+  //       .json({ ...response, status_code: undefined });
+  //     return;
+  //   } catch (error) {
+  //     res.status(500).json({ message: error.message });
+  //     return;
+  //   }
+  // }
 
   @Get()
   @ApiQuery({ name: 'uid', required: false })
