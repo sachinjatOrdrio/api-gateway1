@@ -1,17 +1,17 @@
 import { Controller, Get, Post, Body, Param, Res } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+// import { UpdateAuthDto } from './dto/update-auth.dto';
 import { ApiParam, ApiTags } from '@nestjs/swagger';
 import { PhoneLoginAuthDto } from './dto/phone-login.dto';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
 import { LoginDto } from './dto/login.dto';
-import { ResetPasswordDto } from './dto/reset-password.dto';
+// import { ResetPasswordDto } from './dto/reset-password.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { ResendEmailDto } from './dto/resend-email.dto';
 import { SocialLoginDto } from './dto/social-login.dto';
 import { PhoneRegisterDto } from './dto/phone-register.dto';
 import { SocialAuthRegisterDto } from './dto/social-auth.dto';
-import { Observable } from 'rxjs';
+// import { Observable } from 'rxjs';
 import { AuthRpcService } from './auth.rpc.service';
 import { MessagePatternEnum } from './enums/message-patterns.enum';
 import { Response } from 'express';
@@ -29,7 +29,27 @@ export class AuthController {
       const response = await this.rabbitRPC
         .sendRequest(MessagePatternEnum.REGISTER, createAuthDto)
         .toPromise();
-      console.log(response);
+      console.log('response: ', response);
+      res
+        .status(response.status_code)
+        .json({ ...response, status_code: undefined });
+      return;
+    } catch (error) {
+      console.log('AuthController', error);
+      res.status(500).json({ message: error.message });
+      return;
+    }
+  }
+
+  @Post('/resend-email')
+  async resendEmail(
+    @Body() resendEmailDto: ResendEmailDto,
+    @Res() res: Response,
+  ): Promise<any> {
+    try {
+      const response = await this.rabbitRPC
+        .sendRequest(MessagePatternEnum.RESEND_EMAIL, resendEmailDto)
+        .toPromise();
       res
         .status(response.status_code)
         .json({ ...response, status_code: undefined });
@@ -110,14 +130,6 @@ export class AuthController {
       forgotPasswordDto,
     );
   }
-
-  // @Post('/resendemail')
-  // resendEmail(@Body() resendEmailDto: ResendEmailDto) {
-  //   return this.rabbitRPC.sendRequest(
-  //     MessagePatternEnum.RESEND_EMAIL,
-  //     resendEmailDto,
-  //   );
-  // }
 
   @Post('social-login')
   async socialLogin(
