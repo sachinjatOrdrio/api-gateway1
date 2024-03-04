@@ -1,0 +1,49 @@
+name: SandBox-Build and Push to ACR
+on:
+  push:
+    branches:
+      - 'sandbox'
+jobs:
+  build:
+    name: 'Build and Push to ACR'
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: 'sandbox'
+
+      - name: Docker Login
+        uses: azure/docker-login@v1
+        with:
+          login-server: ordriodev.azurecr.io
+          username: ordriodev
+          password: ${{ secrets.ACR_PASSWORD }}
+      - run: |
+          docker build . -t ordriodev.azurecr.io/api-gateway-stg:${{ github.run_number }}
+          docker push ordriodev.azurecr.io/api-gateway-stg:${{ github.run_number }}
+
+  update-manifest-stage:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: ordrio-technologies/k8s-api-gateway
+          ref: 'main'
+          token: ${{ secrets.G_TOKEN }}
+      - name: setup git config
+        run: |
+          git config --global user.email "markwa@ordrio.com"
+          git config --global user.name "markwa22"
+          echo ${{ github.run_number }}
+          sed -i 's#ordriodev.*#ordriodev.azurecr.io/api-gateway-stg:${{ github.run_number }}#g' sandbox/deployment.yaml
+          git add -A
+          git commit -am "Update image for - ${{ github.sha }}"
+      # - run: echo ${{ github }}
+      - run: git push origin main
