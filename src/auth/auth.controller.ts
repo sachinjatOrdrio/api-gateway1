@@ -19,7 +19,7 @@ import { Response } from 'express';
 @Controller('auth')
 @ApiTags('auth')
 export class AuthController {
-  constructor(private readonly rabbitRPC: AuthRpcService) { }
+  constructor(private readonly rabbitRPC: AuthRpcService) {}
   @Post('/register')
   async signUp(
     @Body() createAuthDto: CreateAuthDto,
@@ -111,19 +111,19 @@ export class AuthController {
     }
   }
 
-  // @Post('/resetpassword/:verficationToken')
-  // @ApiParam({ name: 'verficationToken', type: String })
+  // @Post('/resetpassword/:verificationToken')
+  // @ApiParam({ name: 'verificationToken', type: String })
   // resetPassword(
   //   @Body() resetPasswordDto: ResetPasswordDto,
-  //   @Param('verficationToken') verficationToken: string,
+  //   @Param('verificationToken') verificationToken: string,
   // ) {
   //   return this.rabbitRPC.sendRequest(MessagePatternEnum.RESET_PASSWORD, {
   //     resetPasswordDto,
-  //     verficationToken,
+  //     verificationToken,
   //   });
   // }
 
-  @Post('/forgotpassword')
+  @Post('/forgot-password')
   forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
     return this.rabbitRPC.sendRequest(
       MessagePatternEnum.FORGOT_PASSWORD,
