@@ -11,4 +11,5 @@ export enum MessagePatternEnum {
   UPDATE_PRODUCT_VARIATION = 'update_product_variation',
   GET_PRODUCT_VARIATION = 'get_product_variation',
   GETALL_PRODUCT_VARIATION = 'getAll_product_variation',
+  CREATE_PRODUCT_BATCH = 'create_product_batch',
 }

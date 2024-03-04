@@ -22,7 +22,7 @@ import { MemberRpcService } from './member/member.rpc.service';
 import { MemberModule } from './member/member.module';
 import { BranchesModule } from './branches/branches.module';
 import { RoleModule } from './role/role.module';
-
+import { BatchesModule } from './batches/batches.module';
 
 @Module({
   imports: [
@@ -56,9 +56,10 @@ import { RoleModule } from './role/role.module';
     CategoriesModule,
     BranchesModule,
     MemberModule,
-    RoleModule
+    RoleModule,
+    BatchesModule,
   ],
   // controllers: [MemberController],
   // providers: [MemberRpcService],
 })
-export class AppModule { }
+export class AppModule {}

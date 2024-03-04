@@ -19,6 +19,7 @@ import { Response } from 'express';
 import { CreateVariationDto } from './dto/create-variation.dto';
 import { UpdateProductDto } from './dto/update-variation.dto';
 import { CreateProductDto } from './dto/create-product.dto';
+import { CreateBatchDto } from './dto/create-batch.dto';
 
 @Controller('products')
 export class ProductController {
