@@ -16,14 +16,14 @@ export class AuthGuard implements CanActivate {
     private readonly jwtService: JwtService,
     private readonly rabbitRPC: AuthRpcService,
     private readonly configService: ConfigService,
-  ) {}
+  ) { }
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const token = request.headers.authorization?.split(' ')[1]; // Extract token from the Authorization header
     console.log(token);
 
     if (!token) {
-      throw new UnauthorizedException('Missing authorization token');
+      throw new UnauthorizedException("You don't have access to perform this operation.");
     }
 
     try {
@@ -38,13 +38,13 @@ export class AuthGuard implements CanActivate {
       // const user = await this.usersService.findById(decoded.userId); // Fetch user from database based on decoded userId
 
       if (!user) {
-        throw new UnauthorizedException('Invalid token');
+        throw new UnauthorizedException("You don't have access to perform this operation.");
       }
 
       request.user = user; // Attach the user object to the request for future use
       return true; // User is authenticated
     } catch (error) {
-      throw new UnauthorizedException('Invalid token');
+      throw new UnauthorizedException("You don't have access to perform this operation.");
     }
   }
 }
