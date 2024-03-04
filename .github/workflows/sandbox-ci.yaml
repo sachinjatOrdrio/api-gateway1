@@ -2,10 +2,10 @@ name: SandBox-Build and Push to ACR
 on:
   push:
     branches:
-      - 'sandbox'
+      - 'stage'
 jobs:
   build:
-    name: 'Build and Push to ACR'
+    name: 'stg-Build and Push to ACR'
     runs-on: ubuntu-latest
 
     defaults:
