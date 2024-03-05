@@ -72,7 +72,7 @@ export class CustomerController {
     }
   }
 
-  @Get('/:id')
+  @Get()
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @ApiQuery({ name: 'storeId', required: true })
@@ -81,7 +81,7 @@ export class CustomerController {
   @ApiQuery({ name: 'orderBy', required: false })
   @ApiQuery({ name: 'searchKey', required: false })
   async getAllCustomer(
-    @Param('id') id: string,
+    // @Param('id') id: string,
     @Req() req: any,
     @Res() res: Response,
     @Query('storeId') storeId: string,
@@ -93,8 +93,7 @@ export class CustomerController {
     try {
       const user = req.user;
       const response = await this.customerService
-        .sendRequest(MessagePatternEnum.GET_CUSTOMER, {
-          id,
+        .sendRequest(MessagePatternEnum.GET_CUSTOMERS, {
           user,
           storeId,
           limit: limit || 10,
